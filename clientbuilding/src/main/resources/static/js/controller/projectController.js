@@ -9,12 +9,12 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 		clientbuilding.contextPath + '/js/service/clientService.js',
 		clientbuilding.contextPath + '/js/service/userService.js'
 	], function (require, angular) {
-	app.aController(clientbuilding.prefix + 'projectController', ['$scope', '$state', '$rootScope', '$q', '$mdDialog', '$log', '$filter', '$translate', '$translatePartialLoader', '$mdToast', clientbuilding.prefix + 'projectService',
+	app.aController(clientbuilding.prefix + 'projectController', ['$scope', '$state', '$rootScope', '$q', '$mdDialog', '$log', '$filter', '$translate', '$translatePartialLoader', '$mdToast', '$timeout', clientbuilding.prefix + 'projectService',
 			clientmain.prefix + 'calendarService',
 			clientbuilding.prefix + 'typeService',
 			clientbuilding.prefix + 'clientService',
 			clientbuilding.prefix + 'userService',
-		function($scope, $state, $rootScope, $q, $mdDialog, $log, $filter, $translate, $translatePartialLoader, $mdToast, projectService,
+		function($scope, $state, $rootScope, $q, $mdDialog, $log, $filter, $translate, $translatePartialLoader, $mdToast, $timeout, projectService,
 			calendarService, typeService, clientService, userService
 		) {
 		if(typeof(clientbuilding.translate.project) === 'undefined' || clientbuilding.translate.project.indexOf($translate.use()) < 0) {
@@ -300,30 +300,22 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 		
 		// Save.
 		$scope.save = function() {
-			/*// check autocomplete valid.
-			if(!$scope.ctlidprojecttype.selectedItem){
-				$scope.frmProject.idprojecttype.$invalid = true;
-				$scope.frmProject.idprojecttype.$touched = true;
-				$scope.frmProject.$invalid = true;
-			}
-			if(!$scope.ctlidmanager.selectedItem){
-				$scope.frmProject.idmanager.$invalid = true;
-				$scope.frmProject.idmanager.$touched = true;
-				$scope.frmProject.$invalid = true;
-			}
-			if(!$scope.ctlidcalendar.selectedItem){
-				$scope.frmProject.idcalendar.$invalid = true;
-				$scope.frmProject.idcalendar.$touched = true;
-				$scope.frmProject.$invalid = true;
-			}*/
 			// check form valid.
 			if($scope.frmProject.$invalid) {
+				// auto complete require touch.
+				$scope.frmProject.idprojecttype.$touched = true;
+				$scope.frmProject.idmanager.$touched = true;
+				$scope.frmProject.idcalendar.$touched = true;
+				// form dirty.
 				$scope.frmProject.$dirty = true;
 				$scope.frmDirty = true;
 				$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
 				return;
 			}
-			$scope.showMessageOnToast($translate.instant('clientbuilding_home_saving'), 0);
+			
+			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialog_alert.html';
+			clientmain.showDialogAlert($mdDialog, htmlUrlTemplate, $translate.instant('clientbuilding_home_saving'));
+			//$scope.showMessageOnToast($translate.instant('clientbuilding_home_saving'), 0);
 			// Ignore time in date.
 			if($scope.project.donedate){
 				$scope.project.donedate = clientmain.getDateIgnoreTime($scope.project.donedate);
@@ -334,6 +326,7 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 			if($scope.project.closedate){
 				$scope.project.closedate = clientmain.getDateIgnoreTime($scope.project.closedate);
 			}
+			// save to server.
 			var result;
 			if($scope.project.id > -1) {
 				result = projectService.updateWithLock($scope.project.id, $scope.project);
@@ -343,7 +336,10 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 			result.then(
 				// success.
 				function(response) {
-					$mdToast.hide();
+					// while init dialog.
+					$timeout(function(){
+						//$mdDialog.hide();
+					}, 1000);
 					if(response.status === httpStatus.code.OK) {
 						if($scope.project.id > -1) {
 							$scope.project.version = response.data;
@@ -351,7 +347,7 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 							$scope.project.id = response.data;
 							$scope.project.version = 1;
 						}
-						$scope.showMessageOnToast($translate.instant('clientbuilding_home_saved'));
+						//$scope.showMessageOnToast($translate.instant('clientbuilding_home_saved'));
 						$scope.listWithCriteriasByPage($scope.page.currentPage);
 					} else {
 						if(response.data.code == clientbuilding.serverCode.VERSIONDIFFERENCE) {
@@ -363,7 +359,7 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 				},
 				// error.
 				function(response) {
-					$mdToast.hide();
+					//$mdToast.hide();
 					$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
 				}
 			);
@@ -371,9 +367,9 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 		
 		// Delete.
 		$scope.delete = function(id, version) {
-			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialogConfirm.html';
-			let title = $translate.instant('clientmain_home_delete_message_confirm');
-			clientmain.showDialogConfirm($mdDialog, htmlUrlTemplate, title, '').then(function(response) {
+			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialog_confirm.html';
+			let title = $translate.instant('clientbuilding_home_delete_message_confirm');
+			clientmain.showDialogConfirm($mdDialog, htmlUrlTemplate, title).then(function(response) {
 				// ok delete.
 				if(response){
 					projectService.updateForDeleteWithLock(id, version)
@@ -399,9 +395,9 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 		
 		// Delete with create.
 		$scope.deleteOnForm = function() {
-			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialogConfirm.html';
-			let title = $translate.instant('clientmain_home_delete_message_confirm');
-			clientmain.showDialogConfirm($mdDialog, htmlUrlTemplate, title, '').then(function(response) {
+			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialog_confirm.html';
+			let title = $translate.instant('clientbuilding_home_delete_message_confirm');
+			clientmain.showDialogConfirm($mdDialog, htmlUrlTemplate, title).then(function(response) {
 				// ok delete.
 				if(response){
 					projectService.updateForDeleteWithLock($scope.project.id, $scope.project.version)
@@ -581,10 +577,10 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 		
 		//Show Message Toast
 		$scope.showMessageOnToast = function(message, delay){
-			if(!delay){
+			if(typeof(delay) === 'undefined'){
 				delay = 3000;
 			}
-			return $mdToast.show($mdToast.simple().position('top right').hideDelay(delay).textContent(message));
+			return $mdToast.show($mdToast.toastMessage().text(message).position('top right').hideDelay(delay));
 		}
 	
 	}]);

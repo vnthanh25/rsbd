@@ -1,9 +1,4 @@
-if(typeof(clientmain) === 'undefined'){
-	clientmain = {
-			contextPath: '/clientmain',
-			prefix: 'clientmain'
-	}
-}
+
 clientmain.createFile = function(filename, filetype) {
     if (filetype == "js") { //if filename is a external JavaScript file
         var fileref = document.createElement('script');
@@ -105,28 +100,6 @@ clientmain.showDialog = function ($scope, $mdDialog, htmlUrlTemplate, params) {
     });
 }
 
-clientmain.showPopUp = function ($scope, $mdDialog, htmlUrlTemplate, params) {
-    return $mdDialog.show({
-        clickOutsideToClose: false,
-        scope: $scope,
-        preserveScope: true,
-        templateUrl: htmlUrlTemplate,
-        parent: angular.element(document.body),
-        fullscreen: false,
-        multiple: true,
-        controller: function DialogController($scope, $mdDialog) {
-			if(!$scope.closeDialog) {
-				$scope.closeDialog = function () {
-					$mdDialog.hide();
-				}
-			}
-        },
-        locals: {
-        	params: params
-        }
-    });
-}
-
 clientmain.showDialogWithControllerName = function (controllerName, aliasName, $mdDialog, htmlUrlTemplate, params) {
     return $mdDialog.show({
         clickOutsideToClose: false,
@@ -144,7 +117,42 @@ clientmain.showDialogWithControllerName = function (controllerName, aliasName, $
     });
 }
 
-clientmain.Ttransfer = function (pFromList, pToList, pIndex) {
+clientmain.showDialogConfirm = function (mdDialog, htmlUrlTemplate, title, message) {
+	var confirm = mdDialog.confirm({
+		templateUrl: htmlUrlTemplate,
+		controller: function($scope, $mdDialog) {
+			$scope.title = title;
+			$scope.message = message;
+			
+			$scope.ok = function() {
+				$mdDialog.hide(true);
+			};
+
+			$scope.cancel = function() {
+				$mdDialog.hide(false);
+			};
+		},
+		multiple: true,
+		parent: angular.element(document.body)
+	});
+    return mdDialog.show(confirm);
+}
+
+clientmain.showDialogAlert = function (mdDialog, htmlUrlTemplate, title, message) {
+	var confirm = mdDialog.alert({
+		templateUrl: htmlUrlTemplate,
+        controller: function($scope) {
+        	$scope.title = title;
+			$scope.message = message;
+        },
+		multiple: true,
+		parent: angular.element(document.body)
+	});
+
+    return mdDialog.show(confirm);
+}
+
+clientmain.transferList = function (pFromList, pToList, pIndex) {
     if (pIndex >= 0) {
         pToList.push(pFromList[pIndex]);
         pFromList.splice(pIndex, 1);
@@ -204,27 +212,13 @@ clientmain.IndexOfByProperty = function (pObjects, pPropertyName, pPropertyValue
     return -1;
 }
 
-clientmain.showPleaseWait = function(text) {
-    var modalLoading = '<div class="modal" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false role="dialog">\
-        <div class="modal-dialog">\
-            <div class="modal-content">\
-                <div class="modal-header">\
-                    <h4 class="modal-title">'+text+'</h4>\
-                </div>\
-                <div class="modal-body">\
-                    <div class="progress">\
-                      <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"\
-                      aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%; height: 40px">\
-                      </div>\
-                    </div>\
-                </div>\
-            </div>\
-        </div>\
-    </div>';
-    $(document.body).append(modalLoading);
-    $("#pleaseWaitDialog").modal("show");
-}
 
-clientmain.hidePleaseWait = function() {
-    $("#pleaseWaitDialog").modal("hide");
+////////////////////////////////////////
+////////////////////////////////////////
+// Date and time:
+////////////////////////////////////////
+////////////////////////////////////////
+
+clientmain.getDateIgnoreTime = function(date){
+	return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
 }

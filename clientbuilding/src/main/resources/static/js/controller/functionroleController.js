@@ -211,7 +211,7 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/function
 		
 		// Delete.
 		$scope.delete = function(id, version) {
-			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialogConfirm.html';
+			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialog_confirm.html';
 			let title = $translate.instant('clientmain_home_delete_message_confirm');
 			clientmain.showDialogConfirm($mdDialog, htmlUrlTemplate, title, '').then(function(response) {
 				// ok delete.
@@ -239,7 +239,7 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/function
 		
 		// Delete with create.
 		$scope.deleteOnForm = function() {
-			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialogConfirm.html';
+			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialog_confirm.html';
 			let title = $translate.instant('clientmain_home_delete_message_confirm');
 			clientmain.showDialogConfirm($mdDialog, htmlUrlTemplate, title, '').then(function(response) {
 				// ok delete.
@@ -384,10 +384,10 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/function
 		
 		//Show Message Toast
 		$scope.showMessageOnToast = function(message, delay){
-			if(!delay){
+			if(typeof(delay) === 'undefined'){
 				delay = 3000;
 			}
-			return $mdToast.show($mdToast.simple().position('top right').hideDelay(delay).textContent(message));
+			return $mdToast.show($mdToast.toastMessage().text(message).position('top right').hideDelay(delay));
 		}
 	
 	}]);

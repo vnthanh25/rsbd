@@ -8,6 +8,13 @@ var clientbuilding = {
 		translate: {}
 }
 
+var clientmain = {
+		//authenUrl: 'https://localhost:1111',
+		serverUrl: 'http://localhost:4448/servermain',
+		name: 'app',
+		contextPath: 'http://localhost:2228/clientmain',
+		prefix: 'clientmain'
+}
 
 var gDateFormat = 'DD/MM/YYYY';
 var gLanguage = 'vi';
@@ -35,8 +42,8 @@ define(['require', 'angular', 'bootstrap',
 		angular.bootstrap(document, [clientbuilding.name]);
 	}
 	
-	app.config(['$httpProvider', '$locationProvider', '$controllerProvider', '$provide', '$compileProvider', '$stateProvider', '$urlRouterProvider', '$translateProvider', '$translatePartialLoaderProvider', '$mdDateLocaleProvider', 'moment',
-		function($httpProvider, $locationProvider, $controllerProvider, $provide, $compileProvider, $stateProvider, $urlRouterProvider, $translateProvider, $translatePartialLoaderProvider, $mdDateLocaleProvider, moment) {
+	app.config(['$httpProvider', '$locationProvider', '$controllerProvider', '$provide', '$compileProvider', '$stateProvider', '$urlRouterProvider', '$translateProvider', '$translatePartialLoaderProvider', '$mdDateLocaleProvider', '$mdToastProvider', 'moment',
+		function($httpProvider, $locationProvider, $controllerProvider, $provide, $compileProvider, $stateProvider, $urlRouterProvider, $translateProvider, $translatePartialLoaderProvider, $mdDateLocaleProvider, $mdToastProvider, moment) {
 		
 		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 		$httpProvider.defaults.headers.common['Accept'] = 'application/json';
@@ -127,6 +134,23 @@ define(['require', 'angular', 'bootstrap',
 	          var m = moment(date);
 	          return m.isValid() ? m.format('L') : '';
 	        };
+	    });
+	    
+	    // toastMessage.
+	    $mdToastProvider.addPreset('toastMessage', {
+	    	methods: ['text'],
+	    	options: function() {
+	    		return {
+	    			templateUrl: clientbuilding.contextPath + '/view/toast_message.html',
+	    			controller: function($scope) {
+	    				$scope.text = $scope.toast.text;
+	    			},
+	    			bindToController: true,
+	    			controllerAs: 'toast',
+	    			position: 'top right',
+	    			text: '...'
+	    		};
+	    	}
 	    });
 	    
 	    // Default route.
