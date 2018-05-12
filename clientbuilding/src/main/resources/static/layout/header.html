@@ -1,0 +1,38 @@
+
+<ul class="nav navbar-nav">
+	<li data-ng-if="loggedIn"><a href="" ng-click="openNav()">Module</a></li>
+</ul>
+
+<ul class="nav navbar-nav navbar-right">
+
+	<li ng-hide="loggedIn" ng-click="showLoginForm()"><a>{{'clientmain_header_login' | translate }}</a></li>
+	
+	<li >
+		<span class="num"  ng-if="notifies.clientbuilding.count > 0" >{{notifies.clientbuilding.count}}</span>
+		<md-button class="md-icon-button"  data-ng-if="loggedIn">
+         	<i class="material-icons" ng-if="notifies.totalCount==0">notifications</i>
+         	<i class="material-icons"  ng-if="notifies.totalCount>0">notifications_active</i>
+        </md-button>  
+	</li>
+	<li>
+		<md-button class="md-icon-button" ng-click="changeLanguage('en');" data-ng-if="loggedIn">
+         	<img src="/clientbuilding/image/usa.png" alt="English" />
+        </md-button>   
+	</li>
+	<li>
+         <md-button class="md-icon-button" ng-click="changeLanguage('vi');"  data-ng-if="loggedIn">
+         	<img src="/clientbuilding/image/vn.png" alt="Việt nam" />
+         </md-button>  
+	</li>
+	
+    <li class="dropdown" data-ng-if="loggedIn">
+    	<div class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+			<img alt="" data-ng-src="{{userthumbnail || '//:0'}}" width="30px" height="30px" class="img-circle"/>
+			{{userdisplayname}} <b class="caret"></b>
+		</div>
+		<ul class="dropdown-menu">
+			<li><a href="#" ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i> {{'clientmain_header_logout' | translate }}</a></li>
+		</ul>
+	</li>
+    
+</ul>

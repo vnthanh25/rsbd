@@ -1,0 +1,330 @@
+
+<div>
+	<md-card>
+		<form name="frmProject" novalidate class="css-form">
+			<!-- title -->
+            <md-card-title-text>
+                <span class="md-headline">{{'clientbuilding_project_title' | translate}}</span>
+            </md-card-title-text>
+			<!-- /title -->
+			<div class="panel panel-default">
+				<!-- Top actions -->
+				<div class="panel-heading">
+					<div class="row">
+						<div class="btn-group pull-right">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-click="save()">
+								<md-tooltip>{{'clientbuilding_home_save' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">save</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="createOnForm()">
+								<md-tooltip>{{'clientbuilding_home_create' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">add</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="project.id > -1" ng-click="deleteOnForm()"
+								md-colors="{background: 'default-red'}">
+								<md-tooltip md-direction="top">{{'clientbuilding_home_delete' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">delete</md-icon>
+							</md-button>
+							
+							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeDialog()">
+								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">close</md-icon>
+							</md-button>
+						</div>
+					</div>
+				</div>
+				<!-- /Top actions -->
+				<!-- Content -->
+				<md-card-content>
+					<div class="row">
+						
+						<!-- First column -->
+						<div class="col-sm-6">
+							<div class="form-vertical">
+								<!-- code -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.code.$touched) && (frmProject.code.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_code' | translate}}</label>
+										<input name="code" ng-model="project.code" required md-input md-no-asterisk>
+										<div ng-messages="(frmDirty || frmProject.code.$touched) && (frmProject.code.$error)">
+											<div ng-message="required">This is required.</div>
+										</div>
+									</md-input-container>
+								</div>
+								<!-- /code -->
+								<!-- name -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.name.$touched) && (frmProject.name.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_name' | translate}}</label>
+										<input name="name" ng-model="project.name" required md-input md-no-asterisk>
+										<div ng-messages="(frmDirty || frmProject.name.$touched) && (frmProject.name.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div>
+									</md-input-container>
+								</div>
+								<!-- /name -->
+								<!-- idprojecttype -->
+	                            <div class="form-group col-sm-12">
+                            		<div class="input-group col-sm-12">
+	                                    <md-autocomplete
+	                                    	md-input-name="idprojecttype" required md-require-match
+	                                    	md-min-length="0" md-clear-button="true"
+	                                        md-items="item in ctlidprojecttype.querySearch(ctlidprojecttype.searchText)"
+	                                        md-selected-item="ctlidprojecttype.selectedItem"
+	                                        md-selected-item-change="ctlidprojecttype.selectedItemChange(item)"
+	                                        md-search-text="ctlidprojecttype.searchText"
+	                                        md-search-text-change="ctlidprojecttype.searchTextChange(ctlidprojecttype.searchText)"
+	                                        md-item-text="item.display"
+	                                        md-floating-label="{{'clientbuilding_project_idprojecttype' | translate}}">
+	                                        <md-item-template>
+	                                            <span md-highlight-text="ctlidprojecttype.searchText" md-highlight-flags="^i">{{ item.display }}</span>
+	                                        </md-item-template>
+	                                        <div ng-messages="(frmDirty || frmProject.idprojecttype.$touched) && (frmProject.idprojecttype.$error)">
+	                                            <div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+	                                            <div ng-message="md-require-match">{{ 'clientbuilding_home_no_item_matching' | translate }}</div>
+	                                        </div>
+	                                    </md-autocomplete>
+	                                </div>
+	                            </div>
+								<!-- /idprojecttype -->
+								<!-- idmanager -->
+	                            <div class="form-group col-sm-12">
+                            		<div class="input-group col-sm-12">
+	                                    <md-autocomplete
+	                                    	md-input-name="idmanager" required md-require-match
+	                                    	md-min-length="0" md-clear-button="true"
+	                                        md-items="item in ctlidmanager.querySearch(ctlidmanager.searchText)"
+	                                        md-selected-item="ctlidmanager.selectedItem"
+	                                        md-selected-item-change="ctlidmanager.selectedItemChange(item)"
+	                                        md-search-text="ctlidmanager.searchText"
+	                                        md-search-text-change="ctlidmanager.searchTextChange(ctlidmanager.searchText)"
+	                                        md-item-text="item.display"
+	                                        md-floating-label="{{'clientbuilding_project_idmanager' | translate}}">
+	                                        <md-item-template>
+	                                            <span md-highlight-text="ctlidmanager.searchText" md-highlight-flags="^i">{{ item.display }}</span>
+	                                        </md-item-template>
+	                                        <div ng-messages="(frmDirty || frmProject.idmanager.$touched) && (frmProject.idmanager.$error)">
+	                                            <div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+	                                            <div ng-message="md-require-match">{{ 'clientbuilding_home_no_item_matching' | translate }}</div>
+	                                        </div>
+	                                    </md-autocomplete>
+	                                </div>
+	                            </div>
+								<!-- /idmanager -->
+								<!-- idcalendar -->
+	                            <div class="form-group col-sm-12">
+                            		<div class="input-group col-sm-12">
+	                                    <md-autocomplete
+	                                    	md-input-name="idcalendar" required md-require-match
+	                                    	md-min-length="0" md-clear-button="true"
+	                                        md-items="item in ctlidcalendar.querySearch(ctlidcalendar.searchText)"
+	                                        md-selected-item="ctlidcalendar.selectedItem"
+	                                        md-selected-item-change="ctlidcalendar.selectedItemChange(item)"
+	                                        md-search-text="ctlidcalendar.searchText"
+	                                        md-search-text-change="ctlidcalendar.searchTextChange(ctlidcalendar.searchText)"
+	                                        md-item-text="item.display"
+	                                        md-floating-label="{{'clientbuilding_project_idcalendar' | translate}}">
+	                                        <md-item-template>
+	                                            <span md-highlight-text="ctlidcalendar.searchText" md-highlight-flags="^i">{{ item.display }}</span>
+	                                        </md-item-template>
+	                                        <div ng-messages="(frmDirty || frmProject.idcalendar.$touched) && (frmProject.idcalendar.$error)">
+	                                            <div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+	                                            <div ng-message="md-require-match">{{ 'clientbuilding_home_no_item_matching' | translate }}</div>
+	                                        </div>
+	                                    </md-autocomplete>
+	                                </div>
+	                            </div>
+								<!-- /idcalendar -->
+								<!-- progress -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.progress.$touched) && (frmProject.progress.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_progress' | translate}}</label>
+										<input name="progress" ng-model="project.progress" md-input md-no-asterisk numeric decimals="0" formatting="true" min="1" max="999999999">
+									</md-input-container>
+								</div>
+								<!-- /progress -->
+								<!-- color -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.color.$touched) && (frmProject.color.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_color' | translate}}</label>
+										<input name="color" ng-model="project.color" md-input md-no-asterisk>
+										<!-- <div ng-messages="(frmDirty || frmProject.color.$touched) && (frmProject.color.$error)">
+											<div ng-message="required">This is required.</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /color -->
+							</div>
+						</div>
+						<!-- /First column -->
+						
+						<!-- Second column -->
+						<div class="col-sm-6">
+							<div class="form-vertical">
+								<!-- idproject -->
+	                            <div class="form-group col-sm-12">
+	                                <div class="input-group col-sm-12">
+	                                    <md-autocomplete
+	                                    	md-input-name="idproject"
+	                                    	md-min-length="0" md-clear-button="true"
+	                                        md-selected-item="ctlidproject.selectedItem"
+	                                        md-search-text-change="ctlidproject.searchTextChange(ctlidproject.searchText)"
+	                                        md-search-text="ctlidproject.searchText" md-selected-item-change="ctlidproject.selectedItemChange(item)"
+	                                        md-items="item in ctlidproject.querySearch(ctlidproject.searchText)"
+	                                        md-item-text="item.display"
+	                                        md-floating-label="{{'clientbuilding_project_idproject' | translate}}">
+	                                        <md-item-template>
+	                                            <span md-highlight-text="ctlidproject.searchText" md-highlight-flags="^i">{{ item.display }}</span>
+	                                        </md-item-template>
+	                                    </md-autocomplete>
+	                                </div>
+	                            </div>
+								<!-- /idproject -->
+								<!-- idclient -->
+	                            <div class="form-group col-sm-12">
+                            		<div class="input-group col-sm-12">
+	                                    <md-autocomplete
+	                                    	md-input-name="idclient"
+	                                    	md-min-length="0" md-clear-button="true"
+	                                        md-items="item in ctlidclient.querySearch(ctlidclient.searchText)"
+	                                        md-selected-item="ctlidclient.selectedItem"
+	                                        md-selected-item-change="ctlidclient.selectedItemChange(item)"
+	                                        md-search-text="ctlidclient.searchText"
+	                                        md-search-text-change="ctlidclient.searchTextChange(ctlidclient.searchText)"
+	                                        md-item-text="item.display"
+	                                        md-floating-label="{{'clientbuilding_project_idclient' | translate}}">
+	                                        <md-item-template>
+	                                            <span md-highlight-text="ctlidclient.searchText" md-highlight-flags="^i">{{ item.display }}</span>
+	                                        </md-item-template>
+	                                    </md-autocomplete>
+	                                </div>
+	                            </div>
+								<!-- /idclient -->
+								<!-- clientcode -->
+<!-- 								
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.clientcode.$touched) && (frmProject.clientcode.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_clientcode' | translate}}</label>
+										<input md-input md-no-asterisk name="clientcode" ng-model="project.clientcode">
+										<div ng-messages="(frmDirty || frmProject.clientcode.$touched) && (frmProject.clientcode.$error)">
+											<div ng-message="required">This is required.</div>
+										</div>
+									</md-input-container>
+								</div>
+								
+ -->								<!-- /clientcode -->
+								<!-- idcontact -->
+	                            <div class="form-group col-sm-12">
+                            		<div class="input-group col-sm-12">
+	                                    <md-autocomplete
+	                                    	md-input-name="idcontact"
+	                                    	md-min-length="0" md-clear-button="true"
+	                                        md-items="item in ctlidcontact.querySearch(ctlidcontact.searchText)"
+	                                        md-selected-item="ctlidcontact.selectedItem"
+	                                        md-selected-item-change="ctlidcontact.selectedItemChange(item)"
+	                                        md-search-text="ctlidcontact.searchText"
+	                                        md-search-text-change="ctlidcontact.searchTextChange(ctlidcontact.searchText)"
+	                                        md-item-text="item.display"
+	                                        md-floating-label="{{'clientbuilding_project_idcontact' | translate}}">
+	                                        <md-item-template>
+	                                            <span md-highlight-text="ctlidcontact.searchText" md-highlight-flags="^i">{{ item.display }}</span>
+	                                        </md-item-template>
+	                                    </md-autocomplete>
+	                                </div>
+	                            </div>
+								<!-- /idcontact -->
+								<!-- contractcode -->
+<!-- 								
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.contractcode.$touched) && (frmProject.contractcode.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_contractcode' | translate}}</label>
+										<input md-input md-no-asterisk name="contractcode" ng-model="project.contractcode">
+										<div ng-messages="(frmDirty || frmProject.contractcode.$touched) && (frmProject.contractcode.$error)">
+											<div ng-message="required">This is required.</div>
+										</div>
+									</md-input-container>
+								</div>
+								
+ -->								<!-- /contractcode -->
+								<!-- donedate -->
+								<div class="form-group col-sm-12">
+	                                <md-input-container>
+	                                    <label>{{'clientwh_project_donedate' | translate}}</label>
+	                                    <md-datepicker name="donedate" ng-model="project.donedate" md-placeholder="{{'clientwh_project_donedate' | translate}}" md-open-on-focus></md-datepicker>
+	                                </md-input-container>
+								</div>
+								<!-- /donedate -->
+								<!-- canceldate -->
+								<div class="form-group col-sm-12">
+	                                <md-input-container>
+	                                    <label>{{'clientwh_project_canceldate' | translate}}</label>
+	                                    <md-datepicker name="canceldate" ng-model="project.canceldate" md-placeholder="{{'clientwh_project_canceldate' | translate}}" md-open-on-focus></md-datepicker>
+	                                </md-input-container>
+								</div>
+								<!-- /canceldate -->
+								<!-- closedate -->
+								<div class="form-group col-sm-12">
+	                                <md-input-container>
+	                                    <label>{{'clientwh_project_closedate' | translate}}</label>
+	                                    <md-datepicker name="closedate" ng-model="project.closedate" md-placeholder="{{'clientwh_project_closedate' | translate}}" md-open-on-focus></md-datepicker>
+	                                </md-input-container>
+								</div>
+								<!-- /closedate -->
+							
+							</div>
+						</div>
+						<!-- /Second column -->
+					</div>
+					<!-- second row -->
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-vertical">
+								<!-- description -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.description.$touched) && (frmProject.description.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_description' | translate}}</label>
+										<input ckeditor="ckoptions" type="text" 
+											id="description" name="description" ng-model="project.description">
+										</input>
+									</md-input-container>
+								</div>
+								<!-- /description -->
+							</div>
+						</div>
+					</div>
+					<!-- /second row -->
+				</md-card-content>
+				<!-- /Content -->
+				<!-- Bottom actions -->
+				<div class="panel-footer">
+					<div class="row">
+						<div class="btn-group pull-right">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-click="save()">
+								<md-tooltip>{{'clientbuilding_home_save' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">save</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="createOnForm()">
+								<md-tooltip>{{'clientbuilding_home_create' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">add</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="project.id > -1" ng-click="deleteOnForm()"
+								md-colors="{background: 'default-red'}">
+								<md-tooltip md-direction="top">{{'clientbuilding_home_delete' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">delete</md-icon>
+							</md-button>
+							
+							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeDialog()">
+								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">close</md-icon>
+							</md-button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</md-card>
+</div>

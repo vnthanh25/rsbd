@@ -1,0 +1,253 @@
+
+<!-- Main content -->
+<section class="content">
+	
+	<!-- Default box -->
+	<div class="box">
+		<div class="box-body">
+			<div class="padded">
+				<div ng-init="initList()">
+					<!-- panel -->
+					<div class="panel panel-default">
+						<!-- panel-heading -->
+						<div class="panel-heading">
+						
+							<!-- top actions -->
+							<div class="row">
+								<!-- search & sort	 -->
+								<div class="col-sm-6">
+									<div class="row pull-left">
+										<!-- search -->
+										<div class="col-sm-8 searchmain">
+											<form ng-submit="listWithCriteriasByPage(page.currentPage)">
+												<div layout="row">
+													<md-input-container flex="grow" class="md-block" style="margin-top:10px;margin-bottom:0px">
+														<label class="control-label">{{'clientbuilding_home_search' | translate}}</label>
+														<input md-input md-no-asterisk ng-model="search.content">
+													</md-input-container>
+	
+													<div flex="auto" class="btn-group">
+														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" type="submit">
+															<md-tooltip>{{'clientbuilding_home_search' | translate}}</md-tooltip>
+															<md-icon md-font-library="material-icons">search</md-icon>
+														</md-button>
+													</div>
+												</div>
+											</form>
+										</div>
+										<!-- /search -->
+										<!-- sort by -->
+										<div class="col-sm-4 sortmain">
+											<form ng-submit="sortBy(sortName)">
+												<div layout="row">
+													<md-input-container flex="grow" class="md-block" style="margin-top:10px;margin-bottom:0px">
+														<label class="control-label">{{'clientbuilding_home_sort' | translate}}</label>
+														<md-select md-input md-no-asterisk ng-model="sortName" ng-change="sortBy(sortName)" placeholder="{{'clientbuilding_home_sort' | translate}}">
+															<md-option ng-repeat="s in sortData" ng-value="s.value">
+																{{s.display}}
+															</md-option>
+														</md-select>
+													</md-input-container>
+	
+													<div flex="auto" class="btn-group">
+														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="sortReverse()">
+															<md-tooltip>{{reverseTitle}}</md-tooltip>
+															<md-icon ng-if="reverse" md-font-library="material-icons">arrow_upward</md-icon>
+															<md-icon ng-if="!reverse" md-font-library="material-icons">arrow_downward</md-icon>
+														</md-button>
+													</div>
+										        </div>
+											</form>
+									    </div>
+									    <!-- /sort by -->
+								    </div>
+								</div>
+								<!-- paging & action -->
+								<div class="col-sm-6">
+									<div class="btn-group pull-right">
+										<dir-pagination-controls pagination-id="paginationproject"
+											class="paginationmain"
+											max-size="5"
+											direction-links="true"
+											boundary-links="true" 
+											on-page-change="listWithCriteriasByPage(newPageNumber)">
+										</dir-pagination-controls>
+										<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="showCreate()">
+											<md-tooltip md-direction="bottom">{{'clientbuilding_home_create' | translate}}</md-tooltip>
+											<md-icon md-font-library="material-icons">add</md-icon>
+										</md-button>
+									</div>
+								</div>
+							</div>
+							<!-- /top actions -->
+						</div>
+						<!-- /panel-heading -->
+					
+						<!-- list of content -->
+						<div class="panel-body">
+							<div class="col-sm-12 col-md-4" pagination-id="paginationproject" dir-paginate="item in projects | itemsPerPage:page.pageSize"
+								current-page="page.currentPage" total-items="page.totalElements">
+								<div class="caption">
+									<md-content>
+										<md-card>
+											<md-card-title>
+												<md-card-title-text>
+													<span class="md-headline">{{'clientbuilding_project_title' | translate}}</span>
+												</md-card-title-text>
+											</md-card-title>
+
+											<md-card-content>
+												<!-- idproject -->
+												<p>{{item.idproject}}</p>
+												<!-- idcalendar -->
+												<p>{{item.idcalendar}}</p>
+												<!-- idprojecttype -->
+												<p>{{item.idprojecttype}}</p>
+												<!-- idclient -->
+												<p>{{item.idclient}}</p>
+												<!-- idcontact -->
+												<p>{{item.idcontact}}</p>
+												<!-- idmanager -->
+												<p>{{item.idmanager}}</p>
+												<!-- progress -->
+												<p>{{item.progress}}</p>
+												<!-- projectcode -->
+												<p>{{item.projectcode}}</p>
+												<!-- contractcode -->
+												<p>{{item.contractcode}}</p>
+												<!-- clientcode -->
+												<p>{{item.clientcode}}</p>
+												<!-- name -->
+												<p>{{item.name}}</p>
+												<!-- description -->
+												<p ng-bind-html="item.description"></p>
+												<!-- color -->
+												<p>{{item.color}}</p>
+												<!-- sortorder -->
+												<p>{{item.sortorder}}</p>
+												<!-- idcancel -->
+												<p>{{item.idcancel}}</p>
+												<!-- iddone -->
+												<p>{{item.iddone}}</p>
+												<!-- idclose -->
+												<p>{{item.idclose}}</p>
+												<!-- donedate -->
+												<p>{{item.donedate}}</p>
+												<!-- canceldate -->
+												<p>{{item.canceldate}}</p>
+												<!-- closedate -->
+												<p>{{item.closedate}}</p>
+											</md-card-content>
+
+											<md-card-actions>
+												<md-fab-toolbar md-open="false" count="0" md-direction="left">
+													<md-fab-trigger class="align-with-text">
+														<md-button aria-label="menu" class="md-icon-button test-tooltip md-raised">
+															<md-tooltip md-direction="bottom">Menu</md-tooltip>
+															<md-icon md-font-library="material-icons">more_vert</md-icon>
+														</md-button>
+													</md-fab-trigger>
+
+													<md-toolbar>
+														<md-fab-actions class="md-toolbar-tools">
+															<md-button class="md-icon-button test-tooltip md-primary md-raised" md-colors="{background: 'default-blue'}" ng-click="showView(item.id)">
+																<md-icon md-font-library="material-icons">visibility</md-icon>
+															</md-button>
+															<md-button class="md-icon-button test-tooltip md-primary md-raised" md-colors="{background: 'default-green'}" ng-click="showForm(item.id)">
+																<md-icon md-font-library="material-icons">mode_edit</md-icon>
+															</md-button>
+															<md-button class="md-icon-button test-tooltip md-primary md-raised" md-colors="{background: 'default-red'}" ng-click="delete(item.id, item.version)">
+																<md-icon md-font-library="material-icons">delete</md-icon>
+															</md-button>
+														</md-fab-actions>
+													</md-toolbar>
+													
+												</md-fab-toolbar>
+											</md-card-actions>
+										</md-card>
+									</md-content>
+								</div>
+							</div>
+						</div>
+						<!-- panel-footer -->
+						<div class="panel-footer">
+						
+							<!-- bottom actions -->
+							<div class="row">
+								<!-- search & sort	 -->
+								<div class="col-sm-6">
+									<div class="row pull-left">
+										<!-- search -->
+										<div class="col-sm-8 searchmain">
+											<form ng-submit="listWithCriteriasByPage(page.currentPage)">
+												<div layout="row">
+													<md-input-container flex="grow" class="md-block" style="margin-top:10px;margin-bottom:0px">
+														<label class="control-label">{{'clientbuilding_home_search' | translate}}</label>
+														<input md-input md-no-asterisk ng-model="search.content">
+													</md-input-container>
+	
+													<div flex="auto" class="btn-group">
+														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" type="submit">
+															<md-tooltip>{{'clientbuilding_home_search' | translate}}</md-tooltip>
+															<md-icon md-font-library="material-icons">search</md-icon>
+														</md-button>
+													</div>
+												</div>
+											</form>
+										</div>
+										<!-- /search -->
+										<!-- sort by -->
+										<div class="col-sm-4 sortmain">
+											<form ng-submit="sortBy(sortName)">
+												<div layout="row">
+													<md-input-container flex="grow" class="md-block" style="margin-top:10px;margin-bottom:0px">
+														<label class="control-label">{{'clientbuilding_home_sort' | translate}}</label>
+														<md-select md-input md-no-asterisk ng-model="sortName" ng-change="sortBy(sortName)" placeholder="{{'clientbuilding_home_sort' | translate}}">
+															<md-option ng-repeat="s in sortData" ng-value="s.value">
+																{{s.display}}
+															</md-option>
+														</md-select>
+													</md-input-container>
+	
+													<div flex="auto" class="btn-group">
+														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="sortReverse()">
+															<md-tooltip>{{reverseTitle}}</md-tooltip>
+															<md-icon ng-if="reverse" md-font-library="material-icons">arrow_upward</md-icon>
+															<md-icon ng-if="!reverse" md-font-library="material-icons">arrow_downward</md-icon>
+														</md-button>
+													</div>
+										        </div>
+											</form>
+									    </div>
+									    <!-- /sort by -->
+								    </div>
+								</div>
+								<!-- paging & action -->
+								<div class="col-sm-6">
+									<div class="btn-group pull-right">
+										<dir-pagination-controls pagination-id="paginationproject"
+											class="paginationmain"
+											max-size="5"
+											direction-links="true"
+											boundary-links="true" 
+											on-page-change="listWithCriteriasByPage(newPageNumber)">
+										</dir-pagination-controls>
+										<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="showCreate()">
+											<md-tooltip md-direction="bottom">{{'clientbuilding_home_create' | translate}}</md-tooltip>
+											<md-icon md-font-library="material-icons">add</md-icon>
+										</md-button>
+									</div>
+								</div>
+							</div>
+							<!-- /bottom actions -->
+						</div>
+						<!-- /panel-footer -->
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.box-body -->
+	  </div><!-- /.box -->
+
+</section><!-- /.content -->

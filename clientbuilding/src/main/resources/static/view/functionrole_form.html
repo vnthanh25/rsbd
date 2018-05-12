@@ -1,0 +1,135 @@
+
+<div>
+	<md-card>
+		<form name="frmFunctionrole" novalidate class="css-form">
+			<!-- title -->
+               <md-card-title-text>
+                   <span class="md-headline">{{'clientbuilding_functionrole_title' | translate}}</span>
+               </md-card-title-text>
+			<!-- /title -->
+			<div class="panel panel-default">
+				<!-- Top actions -->
+				<div class="panel-heading">
+					<div class="row">
+						<div class="btn-group pull-right">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-click="save()">
+								<md-tooltip>{{'clientbuilding_home_save' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">save</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="createOnForm()">
+								<md-tooltip>{{'clientbuilding_home_create' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">add</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="functionrole.id > -1" ng-click="deleteOnForm()"
+								md-colors="{background: 'default-red'}">
+								<md-tooltip md-direction="top">{{'clientbuilding_home_delete' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">delete</md-icon>
+							</md-button>
+							
+							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeDialog()">
+								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">close</md-icon>
+							</md-button>
+						</div>
+					</div>
+				</div>
+				<!-- /Top actions -->
+				<!-- Content -->
+				<md-card-content>
+					<div class="row">
+						
+						<!-- First column -->
+						<div class="col-sm-6">
+							<div class="form-vertical">
+								<!-- name -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmFunctionrole.name.$touched) && (frmFunctionrole.name.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_functionrole_name' | translate}}</label>
+										<input required max-length="100" md-input md-no-asterisk
+											name="name" ng-model="functionrole.name">
+										<div ng-messages="(frmDirty || frmFunctionrole.name.$touched) && (frmFunctionrole.name.$error)">
+											<div ng-message="required">{{'clientbuilding_home_required_field' | translate}}</div>
+										</div>
+									</md-input-container>
+								</div>
+								<!-- /name -->
+								<!-- defaultcost -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmFunctionrole.defaultcost.$touched) && (frmFunctionrole.defaultcost.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_functionrole_defaultcost' | translate}}</label>
+										<input required numeric decimals="0" formatting="true" min="0" max="999999999" md-input md-no-asterisk
+											name="defaultcost" ng-model="functionrole.defaultcost">
+										<div ng-messages="(frmDirty || frmFunctionrole.defaultcost.$touched) && (frmFunctionrole.defaultcost.$error)">
+											<div ng-message="required">This is required.</div>
+										</div>
+									</md-input-container>
+								</div>
+								<!-- /defaultcost -->
+								<!-- sortorder -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmFunctionrole.sortorder.$touched) && (frmFunctionrole.sortorder.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_functionrole_sortorder' | translate}}</label>
+										<input numeric decimals="0" formatting="true" min="1" max="999999999" md-input md-no-asterisk
+											name="sortorder" ng-model="functionrole.sortorder" ng-init="1">
+									</md-input-container>
+								</div>
+								<!-- /sortorder -->
+							</div>
+						</div>
+						<!-- /First column -->
+						
+						<!-- Second column -->
+						<div class="col-sm-6">
+							<div class="form-vertical">
+								<!-- description -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmFunctionrole.description.$touched) && (frmFunctionrole.description.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_functionrole_description' | translate}}</label>
+										<input ckeditor="ckoptions" type="text" 
+											id="description" name="description" ng-model="functionrole.description">
+										</input>
+										<!-- <div ng-messages="(frmDirty || frmFunctionrole.description.$touched) && (frmFunctionrole.description.$error)">
+											<div ng-message="required">This is required.</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /description -->
+							</div>
+						</div>
+						<!-- /Second column -->
+					</div>
+				</md-card-content>
+				<!-- /Content -->
+				<!-- Bottom actions -->
+				<div class="panel-footer">
+					<div class="row">
+						<div class="btn-group pull-right">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-click="save()">
+								<md-tooltip>{{'clientbuilding_home_save' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">save</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="createOnForm()">
+								<md-tooltip>{{'clientbuilding_home_create' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">add</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="functionrole.id > -1" ng-click="deleteOnForm()"
+								md-colors="{background: 'default-red'}">
+								<md-tooltip md-direction="top">{{'clientbuilding_home_delete' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">delete</md-icon>
+							</md-button>
+							
+							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeDialog()">
+								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">close</md-icon>
+							</md-button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</md-card>
+</div>

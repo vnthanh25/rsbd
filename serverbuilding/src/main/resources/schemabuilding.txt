@@ -1,0 +1,110 @@
+
+* Note: idcreate, idowner, idupdate, iddelete, idlock, createdate, updatedate, deletedate, lockdate.
+status: 1=new, 2=update, 3=delete, 4=notuse.
+notify status: 51=send, 52=view, 53=cannotsend, 55=cancel.
+
+\r\n\r\n-->>\|\|
+(w*)\:\r\n([\w\,\.\'\=\*\+\:\-\_\s\r\n])*\|\|\r\n-->>\1\r\n
+(w*)\:([\w\,\.\'\=\*\+\:\-\_\s\r\n])*\|\|\r\n-->>\1\r\n
+tables:
+type, functionrole, client, project, activity, affectation, baseline, planningelement, planningelementbaseline, assignment, planningmode, plannedwork, plannedworkbaseline, workelement, work, dependable, dependency, status, workflow, workflowstatus.
+
+attachment:
+id, idref, reftype, filename, filesize, mimetype, description, filepath, filetype
+
+comment:
+id, idwriter, idref, reftype, content
+
+notify: status as 51=send, 52=receive, 53=cannotsend, 55=cancel; method as push message (hàng chục), email (hàng trăm). Ex for method: 10 gởi message, 100 gởi email, 110 gởi message và  email, 20 nhận message, 200 nhận email, 220 nhận message và email.
+id, idsend, idreceiver, idref, reftype, content, method, priority, isactive
+
+history:
+id, idref, reftype, content
+
+appconfig:
+id, scope, content
+1, 'mailserver', '{ host:'smtp.gmail.com', port: 465, protocol: 'smtp', username: 'redsunatvn@gmail.com', password: 'yLc/+k4xje6HDSm4XrDPcvbG1lQO4x0z' }'
+
+
+type:
+id, idworkflow, idcategory, idplanningmode, scope, code, name, description, priority, sortorder, color
+
+functionrole:
+id, name, description, sortorder, defaultCost
+
+client:
+id, idclienttype, clientcode, name, numTax, description, tax, designation, street, complement, zip, city, state, country
+
+affectation: assign resource to project. amount = price * quantity + fee.
+id, idproject, idfunctionrole, idref, reftype, scope, code, name, price, quantity, fee, amount, description
+
+project:
+id, idproject, idcalendar, idprojecttype, idclient, idcontact, idmanager, code, name, contractcode, clientCode, progress, description, color, sortorder, idcancel, iddone, idclose, donedate, canceldate, closedate
+
+activity:
+id, idactivity, idproject, idactivitytype, idcontact, name, description, creationdate, result, comment, sortorder, idcancel, iddone, idclose, donedate, canceldate, closedate
+
+baseline: save baseline.
+id, idproject, baselinenumber, name, baselinedate
+
+planningelement: planned date is calculate from 'assigment', 'planning mode', 'Predecessor element', 'Successor element'.
+id, idproject, idplanningmode, idref, reftype, initialstartdate, validatedstartdate, plannedstartdate, realstartdate, initialenddate, validatedenddate, plannedenddate, realenddate, initialduration, validatedduration, plannedduration, realduration, initialwork, validatedwork, plannedwork, realwork, wbs, wbssortable, priority, leftwork, assignedwork, dependencylevel, initialcost, validatedcost, assignedcost, realcost, leftcost, plannedcost, progress, expectedprogress, workelementestimatedwork, workelementrealwork, workelementleftwork, workelementCount, expenseassignedamount, expenseplannedamount, expenserealamount, expenseleftamount, expensevalidatedamount, totalassignedcost, totalplannedcost, totalrealcost, totalleftcost, totalvalidatedcost, notplannedwork, marginwork, margincost, marginworkpct, margincostpct, reserveamount, validatedexpensecalculated
+
+planningelementbaseline: save baseline for planningelement. Remove columns as 'idorganization', 'organizationinherited', 'organizationelementary'.
+id, idbaseline, idproject, idplanningmode, idref, reftype, initialstartdate, validatedstartdate, plannedstartdate, realstartdate, initialenddate, validatedenddate, plannedenddate, realenddate, initialduration, validatedduration, plannedduration, realduration, initialwork, validatedwork, plannedwork, realwork, wbs, wbssortable, priority, leftwork, assignedwork, dependencylevel, initialcost, validatedcost, assignedcost, realcost, leftcost, plannedcost, progress, expectedprogress, workelementestimatedwork, workelementrealwork, workelementleftwork, workelementCount, expenseassignedamount, expenseplannedamount, expenserealamount, expenseleftamount, expensevalidatedamount, totalassignedcost, totalplannedcost, totalrealcost, totalleftcost, totalvalidatedcost, notplannedwork, marginwork, margincost, marginworkpct, margincostpct, reserveamount, validatedexpensecalculated
+
+assignment: assgin resource to activity.
+id, idproject, idaffectation, idfunctionrole, idref, reftype, rate, assignedwork, realwork, leftwork, plannedwork, realstartdate, realenddate, comment, plannedstartdate, plannedenddate, dailycost, newddailycost, assignedcost, realcost, leftcost, plannedcost, billedwork, notplannedwork
+
+planningmode: relationship between activities. Ex: ASAP - As Soon As Possible.
+id, name, code, sortorder, mandatorystartdate, mandatoryenddate, applyto, mandatoryDuration, 
+
+plannedwork: After call button 'Caculate activities planning' on 'Follow-up -> planning'.
+id, idproject, idassignment, idref, reftype, work, workdate, day, week, month, year, dailycost, cost
+
+plannedworkbaseline: save baseline for plannedwork. Add column as 'isrealwork'
+id, idbaseline, idproject, idassignment, idref, reftype, work, workdate, day, week, month, year, dailycost, cost, isrealwork
+
+workelement:
+id, idproject, idactivity, idref, reftype, plannedwork, realwork, leftwork, ongoing, ongoingstartdatetime, realCost, leftCost
+
+work: use for log work.
+id, idproject, idworkelement, idassignment, idref, reftype, work, workdate, day, week, month, year, dailycost, cost
+
+dependable:
+id, name, scope, isdefault
+
+dependency:
+id, idrefpredecessor, idrefsuccessorI, reftypepredecessor, reftypesuccessorI, dependencytype, dependencydelay, comment
+
+status:
+id, name, setdonestatus, setidlestatus, sethandledstatus, setcancelledstatus, color, sortorder, idle, iscopystatus
+
+workflow:
+id, name, description, idle, sortorder
+
+workflowstatus:
+id, idworkflow, idstatusFrom, idstatusTo, scope, allowed
+
+
+Note:
+
+project:
+- Sub project:
+- project cost + payment deplay:
+- Có 1 người quản lý dự án, nhóm người giám sát, 1 người quản kho, 1 kế toán kho, thủ kho, thư ký dự án.
+
+
+activity:
+- Nhân sự, thiết bị, vật tư.
+- Priority: cho nội bộ.
+- Severity (nghiệm trọng, quan trọng): Cho khách hàng đánh giá.
+- Giá theo kế hoạch (ước lương) được tính từ việc assign resource.
+- Giá thực tế được tính từ việc assign resource.
+- Giá khoán cho team hoặc cty bên ngoài hay còn gọi là giá validate.
+- Có thể gán cho team hoặc cty bên ngoài (team và cty bên ngoài không có gì khác nhau) gọi là công tác khoán. 
+
+- Người chịu trách nhiệm công tác (không phân biệt người bên ngoài hay bên trong cty) có quyền tạo những công tác con, gán resource của công ty bên trong hoặc bên ngoài.
+- CHT và người giám sát có toàn quyền trên tất cả các task kể cả task được gán cho cty bên ngoài.
+
+- Daily task chính là action: không có assign resource chỉ có người chịu trách nhiệm.

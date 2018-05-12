@@ -1,0 +1,63 @@
+
+<!-- Left -->
+<div flex="20" layout="column" class="main-sidebar" >
+	<div flex="auto">
+        <a href="#" class="navbar-brand" ui-sref="home">LOGO</a>
+    </div>
+    <div flex="grow" style="overflow:auto">
+      	<div id=sidebar class="main-sidebar" ui-view="left"></div>
+    </div>
+</div>
+<!-- /Left -->
+<!-- Content -->
+<div flex="grow" layout="column" class="main-content" >
+	<div flex="auto" class="layout-hearder">
+		<ul class="list-inline col-sm-4">
+			<li>
+				<!-- sidebar-toggle -->
+				<div class="sidebar-toggle" ng-click="clientmainsidebarclick();">
+					<span class="glyphicon glyphicon-align-left"></span>
+				</div>
+			</li>
+			<li>
+				<div>{{menuActiveTitle}}</div>
+			</li>
+		</ul>
+        <!-- header & nav-collapse-->
+		<div id="navbar" class="collapse navbar-collapse main-header" ui-view="header"></div>
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			<span class="sr-only">Toggle navigation</span>
+			<i class="material-icons">reorder</i>
+		</button>
+	    <div id="moduleNav" class="overlay">
+			<a href="" class="closebtn" ng-click="closeNav()">&times;</a>
+			<div class="overlay-content">
+			<div class="row">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-3">
+					<div class="row">
+						<div class="col-sm-6" data-ng-if="loggedIn">
+							<a href="" ng-click="gotoModule('clientmain');"><img src="/clientbuilding/image/main.png" height="100" width="100"/></a>
+							<span ng-click="gotoModule('clientmain');" class="label label-default">Main</span>
+						</div>
+						<div class="col-sm-6" data-ng-if="loggedIn">
+							<a href="" ng-click="gotoModule('clientwh');"><img src="/clientbuilding/image/moduleWH.png" height="100" width="100"></a>
+							<span ng-click="gotoModule('clientwh');" class="label label-default">Warehouse</span>
+						</div>
+						<div class="col-sm-6" data-ng-if="loggedIn">
+							<a href="" ng-click="gotoModule('clienthr');"><img src="/clientbuilding/image/moduleHR.png" height="100" width="100"/></a>
+							<span ng-click="gotoModule('clienthr');" class="label label-default">Human resources</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3"></div>	
+			</div>
+			</div>
+		</div>
+    </div>
+	<div flex="grow" style="overflow:auto">
+		<div ui-view="content"></div>
+	</div>
+
+</div>
+<!-- /Content -->
