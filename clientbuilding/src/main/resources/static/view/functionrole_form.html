@@ -12,23 +12,28 @@
 				<div class="panel-heading">
 					<div class="row">
 						<div class="btn-group pull-right">
-							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-click="save()">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="refreshForm()">
+								<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">refresh</md-icon>
+							</md-button>
+							
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="save()">
 								<md-tooltip>{{'clientbuilding_home_save' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">save</md-icon>
 							</md-button>
 
-							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="createOnForm()">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-disabled="isServerCalling" ng-click="createOnForm()">
 								<md-tooltip>{{'clientbuilding_home_create' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">add</md-icon>
 							</md-button>
 
-							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="functionrole.id > -1" ng-click="deleteOnForm()"
+							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="functionrole.id > -1" ng-disabled="isServerCalling" ng-click="deleteOnForm()"
 								md-colors="{background: 'default-red'}">
 								<md-tooltip md-direction="top">{{'clientbuilding_home_delete' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">delete</md-icon>
 							</md-button>
 							
-							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeDialog()">
+							<md-button class="md-icon-button test-tooltip md-raised" ng-disabled="isServerCalling" ng-click="closeFormDialog()">
 								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">close</md-icon>
 							</md-button>
@@ -103,32 +108,38 @@
 				</md-card-content>
 				<!-- /Content -->
 				<!-- Bottom actions -->
-				<div class="panel-footer">
+				<div class="panel-heading">
 					<div class="row">
 						<div class="btn-group pull-right">
-							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-click="save()">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="refreshForm()">
+								<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">refresh</md-icon>
+							</md-button>
+							
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="save()">
 								<md-tooltip>{{'clientbuilding_home_save' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">save</md-icon>
 							</md-button>
 
-							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="createOnForm()">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-disabled="isServerCalling" ng-click="createOnForm()">
 								<md-tooltip>{{'clientbuilding_home_create' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">add</md-icon>
 							</md-button>
 
-							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="functionrole.id > -1" ng-click="deleteOnForm()"
+							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="functionrole.id > -1" ng-disabled="isServerCalling" ng-click="deleteOnForm()"
 								md-colors="{background: 'default-red'}">
 								<md-tooltip md-direction="top">{{'clientbuilding_home_delete' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">delete</md-icon>
 							</md-button>
 							
-							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeDialog()">
+							<md-button class="md-icon-button test-tooltip md-raised" ng-disabled="isServerCalling" ng-click="closeFormDialog()">
 								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">close</md-icon>
 							</md-button>
 						</div>
 					</div>
 				</div>
+				<!-- /Bottom actions -->
 			</div>
 		</form>
 	</md-card>

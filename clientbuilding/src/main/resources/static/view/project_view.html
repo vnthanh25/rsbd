@@ -1,0 +1,220 @@
+
+<div>
+	<md-card>
+		<form name="frmProject" novalidate class="css-form">
+			<!-- title -->
+			<md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">{{'clientbuilding_project_title' | translate}}</span>
+                </md-card-title-text>
+            </md-card-title>
+			<!-- /title -->
+			<div class="panel panel-default">
+				<!-- Top actions -->
+				<div class="panel-heading">
+					<div class="row">
+						<div class="btn-group pull-right">
+							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeViewDialog()">
+								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">close</md-icon>
+							</md-button>
+						</div>
+					</div>
+				</div>
+				<!-- /Top actions -->
+				<!-- Content -->
+				<md-card-content>
+					<div class="row">
+						
+						<!-- First column -->
+						<div class="col-sm-6">
+							<div class="form-vertical">
+								<!-- idproject -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.idproject.$touched) && (frmProject.idproject.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_idproject' | translate}}</label>
+										<input md-input md-no-asterisk name="idproject" ng-model="project.idproject" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /idproject -->
+								<!-- idcalendar -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.idcalendar.$touched) && (frmProject.idcalendar.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_idcalendar' | translate}}</label>
+										<input md-input md-no-asterisk name="idcalendar" ng-model="project.idcalendar" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /idcalendar -->
+								<!-- idprojecttype -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.idprojecttype.$touched) && (frmProject.idprojecttype.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_idprojecttype' | translate}}</label>
+										<input md-input md-no-asterisk name="idprojecttype" ng-model="project.idprojecttype" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /idprojecttype -->
+								<!-- idclient -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.idclient.$touched) && (frmProject.idclient.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_idclient' | translate}}</label>
+										<input md-input md-no-asterisk name="idclient" ng-model="project.idclient" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /idclient -->
+								<!-- idcontact -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.idcontact.$touched) && (frmProject.idcontact.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_idcontact' | translate}}</label>
+										<input md-input md-no-asterisk name="idcontact" ng-model="project.idcontact" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /idcontact -->
+								<!-- idmanager -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.idmanager.$touched) && (frmProject.idmanager.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_idmanager' | translate}}</label>
+										<input md-input md-no-asterisk name="idmanager" ng-model="project.idmanager" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /idmanager -->
+								<!-- progress -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.progress.$touched) && (frmProject.progress.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_progress' | translate}}</label>
+										<input md-input md-no-asterisk name="progress" ng-model="project.progress" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /progress -->
+								<!-- projectcode -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.projectcode.$touched) && (frmProject.projectcode.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_projectcode' | translate}}</label>
+										<input md-input md-no-asterisk name="projectcode" ng-model="project.projectcode" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /projectcode -->
+								<!-- contractcode -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.contractcode.$touched) && (frmProject.contractcode.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_contractcode' | translate}}</label>
+										<input md-input md-no-asterisk name="contractcode" ng-model="project.contractcode" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /contractcode -->
+								<!-- clientcode -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.clientcode.$touched) && (frmProject.clientcode.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_clientcode' | translate}}</label>
+										<input md-input md-no-asterisk name="clientcode" ng-model="project.clientcode" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /clientcode -->
+								<!-- name -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.name.$touched) && (frmProject.name.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_name' | translate}}</label>
+										<input md-input md-no-asterisk name="name" ng-model="project.name" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /name -->
+								<!-- description -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.description.$touched) && (frmProject.description.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_description' | translate}}</label>
+										<input md-input md-no-asterisk name="description" ng-model="project.description" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /description -->
+								<!-- color -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.color.$touched) && (frmProject.color.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_color' | translate}}</label>
+										<input md-input md-no-asterisk name="color" ng-model="project.color" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /color -->
+								<!-- sortorder -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.sortorder.$touched) && (frmProject.sortorder.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_sortorder' | translate}}</label>
+										<input md-input md-no-asterisk name="sortorder" ng-model="project.sortorder" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /sortorder -->
+								<!-- idcancel -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.idcancel.$touched) && (frmProject.idcancel.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_idcancel' | translate}}</label>
+										<input md-input md-no-asterisk name="idcancel" ng-model="project.idcancel" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /idcancel -->
+								<!-- iddone -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.iddone.$touched) && (frmProject.iddone.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_iddone' | translate}}</label>
+										<input md-input md-no-asterisk name="iddone" ng-model="project.iddone" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /iddone -->
+								<!-- idclose -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.idclose.$touched) && (frmProject.idclose.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_idclose' | translate}}</label>
+										<input md-input md-no-asterisk name="idclose" ng-model="project.idclose" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /idclose -->
+								<!-- donedate -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.donedate.$touched) && (frmProject.donedate.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_donedate' | translate}}</label>
+										<input md-input md-no-asterisk name="donedate" ng-model="project.donedate" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /donedate -->
+								<!-- canceldate -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.canceldate.$touched) && (frmProject.canceldate.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_canceldate' | translate}}</label>
+										<input md-input md-no-asterisk name="canceldate" ng-model="project.canceldate" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /canceldate -->
+								<!-- closedate -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmProject.closedate.$touched) && (frmProject.closedate.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_project_closedate' | translate}}</label>
+										<input md-input md-no-asterisk name="closedate" ng-model="project.closedate" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /closedate -->
+							</div>
+						</div>
+						<!-- /First column -->
+						
+						<!-- Second column -->
+						<div class="col-sm-6">
+							<div class="form-vertical">
+							
+							</div>
+						</div>
+						<!-- /Second column -->
+					</div>
+				</md-card-content>
+				<!-- /Content -->
+				<!-- Bottom actions -->
+				<div class="panel-footer">
+					<div class="row">
+						<div class="btn-group pull-right">
+							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeViewDialog()">
+								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">close</md-icon>
+							</md-button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</md-card>
+</div>

@@ -209,7 +209,17 @@ define(['require', 'angular'], function (require, angular) {
 	        formatYear: 'yyyy',
 	        startingDay: 1
     	};
-    	
+
+		
+		// check date.
+		$scope.checkDate = function(fieldName){
+			if($scope.entity[fieldName]){
+				$scope.entity[fieldName] = null;
+			} else {
+				$scope.entity[fieldName] = $scope.currentDate;
+			}
+		}
+		
     	// Subtract 2 dates.
     	$scope.subtractTwoDate = function() {
     		var startDate = moment($scope.startDate, 'dd/MM/yyyy');

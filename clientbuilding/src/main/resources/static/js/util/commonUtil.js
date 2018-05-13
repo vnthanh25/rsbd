@@ -55,11 +55,11 @@ clientmain.loadSkin = function(skinName) {
 		// Load js & css.
 		clientmain.loadFile('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', 'css');
 		clientmain.loadFile('http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css', 'css');
-		clientmain.loadFile(clientbuilding.contextPath + '/lib/bootstrap/css/bootstrap.css', 'css');
-		clientmain.loadFile(clientbuilding.contextPath + '/skin/admin/css/admin.min.css', 'css');
-		clientmain.loadFile(clientbuilding.contextPath + '/skin/admin/css/_all-skins.min.css', 'css');
-		clientmain.loadFile(clientbuilding.contextPath + '/skin/admin/css/skin-blue.css', 'css');
-		clientmain.loadFile(clientbuilding.contextPath + '/skin/admin/js/admin.js', 'js');
+		clientmain.loadFile(clientmain.contextPath + '/lib/bootstrap/css/bootstrap.css', 'css');
+		clientmain.loadFile(clientmain.contextPath + '/skin/admin/css/admin.min.css', 'css');
+		clientmain.loadFile(clientmain.contextPath + '/skin/admin/css/_all-skins.min.css', 'css');
+		clientmain.loadFile(clientmain.contextPath + '/skin/admin/css/skin-blue.css', 'css');
+		clientmain.loadFile(clientmain.contextPath + '/skin/admin/js/admin.js', 'js');
 	}
 }
 
@@ -69,24 +69,25 @@ clientmain.removeSkin = function(skinName) {
 		// Load js & css.
 		clientmain.removeFile('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', 'css');
 		clientmain.removeFile('http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css', 'css');
-		clientmain.removeFile(clientbuilding.contextPath + '/lib/bootstrap/css/bootstrap.css', 'css');
-		clientmain.removeFile(clientbuilding.contextPath + '/skin/admin/css/admin.min.css', 'css');
-		clientmain.removeFile(clientbuilding.contextPath + '/skin/admin/css/_all-skins.min.css', 'css');
-		clientmain.removeFile(clientbuilding.contextPath + '/skin/admin/css/skin-blue.css', 'css');
-		clientmain.removeFile(clientbuilding.contextPath + '/skin/admin/js/admin.js', 'js');
+		clientmain.removeFile(clientmain.contextPath + '/lib/bootstrap/css/bootstrap.css', 'css');
+		clientmain.removeFile(clientmain.contextPath + '/skin/admin/css/admin.min.css', 'css');
+		clientmain.removeFile(clientmain.contextPath + '/skin/admin/css/_all-skins.min.css', 'css');
+		clientmain.removeFile(clientmain.contextPath + '/skin/admin/css/skin-blue.css', 'css');
+		clientmain.removeFile(clientmain.contextPath + '/skin/admin/js/admin.js', 'js');
 	}
 }
 
 
-clientmain.showDialog = function ($scope, $mdDialog, htmlUrlTemplate, params) {
-    return $mdDialog.show({
+clientmain.showDialog = function (scope, mdDialog, htmlUrlTemplate, params) {
+    return mdDialog.show({
         clickOutsideToClose: false,
-        scope: $scope,
+        scope: scope,
         preserveScope: true,
         templateUrl: htmlUrlTemplate,
         parent: angular.element(document.body),
         fullscreen: true,
         multiple: true,
+		escapeToClose: false,
         controller: function DialogController($scope, $mdDialog) {
 			if(!$scope.closeDialog) {
 				$scope.closeDialog = function () {
@@ -94,23 +95,25 @@ clientmain.showDialog = function ($scope, $mdDialog, htmlUrlTemplate, params) {
 				}
 			}
         },
+        bindToController: true,
         locals: {
         	params: params
         }
     });
 }
 
-clientmain.showDialogWithControllerName = function (controllerName, aliasName, $mdDialog, htmlUrlTemplate, params) {
-    return $mdDialog.show({
+clientmain.showDialogWithControllerName = function (controllerName, aliasName, mdDialog, htmlUrlTemplate, params) {
+    return mdDialog.show({
         clickOutsideToClose: false,
         preserveScope: true,
         templateUrl: htmlUrlTemplate,
         parent: angular.element(document.body),
         fullscreen: true,
         multiple: true,
+		escapeToClose: false,
         controllerAs: aliasName,
-        bindToController: true,
         controller: controllerName,
+        bindToController: true,
         locals: {
         	params: params
         }
@@ -133,6 +136,7 @@ clientmain.showDialogConfirm = function (mdDialog, htmlUrlTemplate, title, messa
 			};
 		},
 		multiple: true,
+		escapeToClose: false,
 		parent: angular.element(document.body)
 	});
     return mdDialog.show(confirm);
@@ -146,6 +150,7 @@ clientmain.showDialogAlert = function (mdDialog, htmlUrlTemplate, title, message
 			$scope.message = message;
         },
 		multiple: true,
+		escapeToClose: false,
 		parent: angular.element(document.body)
 	});
 

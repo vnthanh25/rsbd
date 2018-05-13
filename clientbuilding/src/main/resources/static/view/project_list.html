@@ -72,6 +72,10 @@
 											boundary-links="true" 
 											on-page-change="listWithCriteriasByPage(newPageNumber)">
 										</dir-pagination-controls>
+										<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="refreshList()">
+											<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
+											<md-icon md-font-library="material-icons">refresh</md-icon>
+										</md-button>
 										<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="showCreate()">
 											<md-tooltip md-direction="bottom">{{'clientbuilding_home_create' | translate}}</md-tooltip>
 											<md-icon md-font-library="material-icons">add</md-icon>
@@ -232,6 +236,10 @@
 											boundary-links="true" 
 											on-page-change="listWithCriteriasByPage(newPageNumber)">
 										</dir-pagination-controls>
+										<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="refreshList()">
+											<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
+											<md-icon md-font-library="material-icons">refresh</md-icon>
+										</md-button>
 										<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="showCreate()">
 											<md-tooltip md-direction="bottom">{{'clientbuilding_home_create' | translate}}</md-tooltip>
 											<md-icon md-font-library="material-icons">add</md-icon>

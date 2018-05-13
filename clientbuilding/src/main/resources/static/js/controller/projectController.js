@@ -5,6 +5,7 @@
 
 define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectService.js',
 		clientmain.contextPath + '/js/service/calendarService.js',
+		
 		clientbuilding.contextPath + '/js/service/typeService.js',
 		clientbuilding.contextPath + '/js/service/clientService.js',
 		clientbuilding.contextPath + '/js/service/userService.js'
@@ -77,6 +78,9 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 			currentPage: 0
 		}
 		
+		$scope.isServerCalling = false;
+		$scope.currentDate = new Date();
+		
 		$scope.project = {id: -1};
 		// listForSelect.
 		$scope.listForSelectPromise;
@@ -86,10 +90,15 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 			$scope.project = { id: -1 };
 		}
 		
+		// Create on form.
+		$scope.createOnForm = function() {
+			$scope.createNew();
+			$scope.resetValidate();
+		}
+		
 		// Create autocomplete.
 		$scope.createAutocomplete = function(name, requirematch){
 			var result = {};
-			result.isCallServer = false;
 			result.isDisabled = false;
 			// Filter.
 			result.createFilterFor = function (query) {
@@ -178,6 +187,22 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 			$scope.frmDirty = false;
 		}
 		
+		// refresh list.
+		$scope.refreshList = function() {
+			$scope.listWithCriteriasByPage($scope.page.currentPage);
+		}
+		
+		// refresh form
+		$scope.refreshForm = function() {
+			if($scope.project.id > -1) {
+				$scope.getById($scope.project.id);
+			} else {
+				$scope.createNew();
+			}
+			$scope.resetValidate();
+			$scope.frmDirty = false;
+		}
+		
 		// Show a create screen.
 		$scope.showCreate = function() {
 			$scope.initForm(-1);
@@ -216,65 +241,61 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 	        });
 	    }
 			
-		// Close dialog.
-		$scope.closeDialog = function(){
+		// Close form dialog.
+		$scope.closeFormDialog = function(){
+			// reload list.
+			$scope.listWithCriteriasByPage($scope.page.currentPage);
+			$mdToast.hide();
+			$mdDialog.hide({id: $scope.project.id});
+		}
+			
+		// Close view dialog.
+		$scope.closeViewDialog = function(){
 			$mdToast.hide();
 			$mdDialog.hide({id: $scope.project.id});
 		}
 		
 		// Reset validate.
 		$scope.resetValidate = function() {
-			// idproject.
-		    $scope.frmProject.idproject.$setPristine();
-			$scope.frmProject.idproject.$setUntouched();
-			// idcalendar.
-		    $scope.frmProject.idcalendar.$setPristine();
-			$scope.frmProject.idcalendar.$setUntouched();
-			// idprojecttype.
-		    $scope.frmProject.idprojecttype.$setPristine();
-			$scope.frmProject.idprojecttype.$setUntouched();
-			// idclient.
-		    $scope.frmProject.idclient.$setPristine();
-			$scope.frmProject.idclient.$setUntouched();
-			// idcontact.
-		    $scope.frmProject.idcontact.$setPristine();
-			$scope.frmProject.idcontact.$setUntouched();
-			// idmanager.
-		    $scope.frmProject.idmanager.$setPristine();
-			$scope.frmProject.idmanager.$setUntouched();
-			// progress.
-		    $scope.frmProject.progress.$setPristine();
-			$scope.frmProject.progress.$setUntouched();
 			// code.
 		    $scope.frmProject.code.$setPristine();
 			$scope.frmProject.code.$setUntouched();
-			// contractcode.
-		    $scope.frmProject.contractcode.$setPristine();
-			$scope.frmProject.contractcode.$setUntouched();
-			// clientcode.
-		    $scope.frmProject.clientcode.$setPristine();
-			$scope.frmProject.clientcode.$setUntouched();
 			// name.
 		    $scope.frmProject.name.$setPristine();
 			$scope.frmProject.name.$setUntouched();
+			// idprojecttype.
+		    $scope.ctlidprojecttype.searchText = undefined;
+		    $scope.frmProject.idprojecttype.$setPristine();
+			$scope.frmProject.idprojecttype.$setUntouched();
+			// idmanager.
+		    $scope.ctlidmanager.searchText = undefined;
+		    $scope.frmProject.idmanager.$setPristine();
+			$scope.frmProject.idmanager.$setUntouched();
+			// idcalendar.
+		    $scope.ctlidcalendar.searchText = undefined;
+		    $scope.frmProject.idcalendar.$setPristine();
+			$scope.frmProject.idcalendar.$setUntouched();
+			// idproject.
+		    $scope.ctlidproject.searchText = undefined;
+		    $scope.frmProject.idproject.$setPristine();
+			$scope.frmProject.idproject.$setUntouched();
+			// idclient.
+		    $scope.ctlidclient.searchText = undefined;
+		    $scope.frmProject.idclient.$setPristine();
+			$scope.frmProject.idclient.$setUntouched();
+			// idcontact.
+		    $scope.ctlidcontact.searchText = undefined;
+		    $scope.frmProject.idcontact.$setPristine();
+			$scope.frmProject.idcontact.$setUntouched();
+			// progress.
+		    $scope.frmProject.progress.$setPristine();
+			$scope.frmProject.progress.$setUntouched();
 			// description.
 		    $scope.frmProject.description.$setPristine();
 			$scope.frmProject.description.$setUntouched();
 			// color.
 		    $scope.frmProject.color.$setPristine();
 			$scope.frmProject.color.$setUntouched();
-			// sortorder.
-		    $scope.frmProject.sortorder.$setPristine();
-			$scope.frmProject.sortorder.$setUntouched();
-			// idcancel.
-		    $scope.frmProject.idcancel.$setPristine();
-			$scope.frmProject.idcancel.$setUntouched();
-			// iddone.
-		    $scope.frmProject.iddone.$setPristine();
-			$scope.frmProject.iddone.$setUntouched();
-			// idclose.
-		    $scope.frmProject.idclose.$setPristine();
-			$scope.frmProject.idclose.$setUntouched();
 			// donedate.
 		    $scope.frmProject.donedate.$setPristine();
 			$scope.frmProject.donedate.$setUntouched();
@@ -292,12 +313,6 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 			$scope.frmDirty = false;
 		}
 		
-		// Create on form.
-		$scope.createOnForm = function() {
-			$scope.createNew();
-			$scope.resetValidate();
-		}
-		
 		// Save.
 		$scope.save = function() {
 			// check form valid.
@@ -306,16 +321,18 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 				$scope.frmProject.idprojecttype.$touched = true;
 				$scope.frmProject.idmanager.$touched = true;
 				$scope.frmProject.idcalendar.$touched = true;
+				$scope.frmProject.idproject.$touched = true;
+				$scope.frmProject.idclient.$touched = true;
+				$scope.frmProject.idcontact.$touched = true;
 				// form dirty.
 				$scope.frmProject.$dirty = true;
 				$scope.frmDirty = true;
 				$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
 				return;
 			}
-			
-			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialog_alert.html';
-			clientmain.showDialogAlert($mdDialog, htmlUrlTemplate, $translate.instant('clientbuilding_home_saving'));
-			//$scope.showMessageOnToast($translate.instant('clientbuilding_home_saving'), 0);
+			$scope.isServerCalling = true;
+			// show message.
+			$scope.showMessageOnToast($translate.instant('clientbuilding_home_saving'), {delay:0});
 			// Ignore time in date.
 			if($scope.project.donedate){
 				$scope.project.donedate = clientmain.getDateIgnoreTime($scope.project.donedate);
@@ -336,10 +353,8 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 			result.then(
 				// success.
 				function(response) {
-					// while init dialog.
-					$timeout(function(){
-						//$mdDialog.hide();
-					}, 1000);
+					$scope.isServerCalling = false;
+					$mdToast.hide();
 					if(response.status === httpStatus.code.OK) {
 						if($scope.project.id > -1) {
 							$scope.project.version = response.data;
@@ -347,8 +362,8 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 							$scope.project.id = response.data;
 							$scope.project.version = 1;
 						}
-						//$scope.showMessageOnToast($translate.instant('clientbuilding_home_saved'));
-						$scope.listWithCriteriasByPage($scope.page.currentPage);
+						// show message.
+						$scope.showMessageOnToast($translate.instant('clientbuilding_home_saved'));
 					} else {
 						if(response.data.code == clientbuilding.serverCode.VERSIONDIFFERENCE) {
 							$scope.showMessageOnToast($translate.instant('clientbuilding_servercode_' + response.data.code));
@@ -359,7 +374,8 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 				},
 				// error.
 				function(response) {
-					//$mdToast.hide();
+					$scope.isServerCalling = false;
+					$mdToast.hide();
 					$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
 				}
 			);
@@ -575,12 +591,33 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 		    return result;
 		}
 		
-		//Show Message Toast
-		$scope.showMessageOnToast = function(message, delay){
-			if(typeof(delay) === 'undefined'){
-				delay = 3000;
+		//Show message.
+		$scope.showMessageOnToast = function(message, params){
+			var toast = $mdToast.toastMessage().textContent(message);
+			if(typeof(params) !== 'undefined'){
+				if(typeof(params.templateUrl) !== 'undefined'){
+					toast.templateUrl(params.templateUrl);
+				}
+				if(typeof(params.action) !== 'undefined'){
+					toast.action(params.action);
+				}
+				if(typeof(params.position) !== 'undefined'){
+					toast.position(params.position);
+				}
+				if(typeof(params.delay) !== 'undefined'){
+					toast.hideDelay(params.delay);
+				}
 			}
-			return $mdToast.show($mdToast.toastMessage().text(message).position('top right').hideDelay(delay));
+			return $mdToast.show(toast);
+		}
+		
+		// check date.
+		$scope.checkDate = function(fieldName){
+			if($scope.project[fieldName]){
+				$scope.project[fieldName] = null;
+			} else {
+				$scope.project[fieldName] = $scope.currentDate;
+			}
 		}
 	
 	}]);

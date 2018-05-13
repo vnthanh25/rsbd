@@ -61,7 +61,7 @@
 								    <!-- /sort by -->
 							    </div>
 							</div>
-							<!-- action -->
+							<!-- paging and action -->
 							<div class="col-sm-6">
 								<div class="btn-group pull-right">
 									<dir-pagination-controls pagination-id="paginationfunctionrole"
@@ -71,12 +71,17 @@
 										boundary-links="true" 
 										on-page-change="listWithCriteriasByPage(newPageNumber)">
 									</dir-pagination-controls>
+									<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="refreshList()">
+										<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
+										<md-icon md-font-library="material-icons">refresh</md-icon>
+									</md-button>
 									<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="showCreate()">
 										<md-tooltip md-direction="bottom">{{'clientbuilding_home_create' | translate}}</md-tooltip>
 										<md-icon md-font-library="material-icons">add</md-icon>
 									</md-button>
 								</div>
 							</div>
+							<!-- /paging and action -->
 						</div>
 						<!-- /top actions -->
 					</div>
@@ -185,7 +190,7 @@
 								    <!-- /sort by -->
 							    </div>
 							</div>
-							<!-- action -->
+							<!-- paging and action -->
 							<div class="col-sm-6">
 								<div class="btn-group pull-right">
 									<dir-pagination-controls pagination-id="paginationfunctionrole"
@@ -195,12 +200,17 @@
 										boundary-links="true" 
 										on-page-change="listWithCriteriasByPage(newPageNumber)">
 									</dir-pagination-controls>
+									<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="refreshList()">
+										<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
+										<md-icon md-font-library="material-icons">refresh</md-icon>
+									</md-button>
 									<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="showCreate()">
 										<md-tooltip md-direction="bottom">{{'clientbuilding_home_create' | translate}}</md-tooltip>
 										<md-icon md-font-library="material-icons">add</md-icon>
 									</md-button>
 								</div>
 							</div>
+							<!-- /paging and action -->
 						</div>
 						<!-- /bottom actions -->
 					</div>

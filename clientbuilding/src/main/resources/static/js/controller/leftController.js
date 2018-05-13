@@ -70,6 +70,12 @@ define(['require', 'angular'], function (require, angular) {
 			}
 			
 			$scope.sidebarMenu($('.sidebar-menu'));
+			
+			$scope.menuSearch = function(text){
+				angular.forEach($scope.menu, function(value, key){
+					$scope.menu[key].hide = key.toLowerCase().indexOf(text.toLowerCase()) < 0;
+				});
+			}
 		});
 	});
 	

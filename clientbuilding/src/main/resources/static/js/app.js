@@ -30,7 +30,7 @@ define(['require', 'angular', 'bootstrap',
 	], function (require, angular) {
 	
 	app = angular.module(clientbuilding.name, ['ui.bootstrap', 'ui.router', 'ngAnimate', 'ngMaterial', 'ngMessages', 'oc.lazyLoad', 'pascalprecht.translate', 'ngCookies', 'ngResource', 'angular-storage', 'LocalStorageModule', 'angularMoment',
-		'angularUtils.directives.dirPagination', 'ckeditor',
+		'angularUtils.directives.dirPagination', 'ckeditor' , 'purplefox.numeric', 'tmh.dynamicLocale',
 		'ui.tree',
 		// gantt chart.
 		'gantt', 'gantt.tree', 'gantt.groups', 'gantt.dependencies', 'gantt.movable', 'gantt.drawtask',
@@ -138,17 +138,22 @@ define(['require', 'angular', 'bootstrap',
 	    
 	    // toastMessage.
 	    $mdToastProvider.addPreset('toastMessage', {
-	    	methods: ['text'],
+	    	methods: ['textContent', 'action', 'templateUrl'],
 	    	options: function() {
 	    		return {
+	    			textContent: '...',
 	    			templateUrl: clientbuilding.contextPath + '/view/toast_message.html',
-	    			controller: function($scope) {
-	    				$scope.text = $scope.toast.text;
+	    			controller: function($scope, $mdToast) {
+	    				$scope.textContent = $scope.toast.textContent;
+	    				$scope.action = $scope.toast.action;
+	    				$scope.closeToast = function(){
+	    					$mdToast.hide();
+	    				}
 	    			},
 	    			bindToController: true,
 	    			controllerAs: 'toast',
 	    			position: 'top right',
-	    			text: '...'
+	    			hideDelay: 3000
 	    		};
 	    	}
 	    });

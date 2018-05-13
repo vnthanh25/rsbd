@@ -12,23 +12,28 @@
 				<div class="panel-heading">
 					<div class="row">
 						<div class="btn-group pull-right">
-							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-click="save()">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="refreshForm()">
+								<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">refresh</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="save()">
 								<md-tooltip>{{'clientbuilding_home_save' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">save</md-icon>
 							</md-button>
 
-							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="createOnForm()">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-disabled="isServerCalling" ng-click="createOnForm()">
 								<md-tooltip>{{'clientbuilding_home_create' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">add</md-icon>
 							</md-button>
 
-							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="project.id > -1" ng-click="deleteOnForm()"
+							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="project.id > -1" ng-disabled="isServerCalling" ng-click="deleteOnForm()"
 								md-colors="{background: 'default-red'}">
 								<md-tooltip md-direction="top">{{'clientbuilding_home_delete' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">delete</md-icon>
 							</md-button>
 							
-							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeDialog()">
+							<md-button class="md-icon-button test-tooltip md-raised" ng-disabled="isServerCalling" ng-click="closeFormDialog()">
 								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">close</md-icon>
 							</md-button>
@@ -70,7 +75,7 @@
                             		<div class="input-group col-sm-12">
 	                                    <md-autocomplete
 	                                    	md-input-name="idprojecttype" required md-require-match
-	                                    	md-min-length="0" md-clear-button="true"
+	                                    	md-min-length="0" md-clear-button="true" md-select-on-match="true" md-autoselect="true"
 	                                        md-items="item in ctlidprojecttype.querySearch(ctlidprojecttype.searchText)"
 	                                        md-selected-item="ctlidprojecttype.selectedItem"
 	                                        md-selected-item-change="ctlidprojecttype.selectedItemChange(item)"
@@ -94,7 +99,7 @@
                             		<div class="input-group col-sm-12">
 	                                    <md-autocomplete
 	                                    	md-input-name="idmanager" required md-require-match
-	                                    	md-min-length="0" md-clear-button="true"
+	                                    	md-min-length="0" md-clear-button="true" md-select-on-match="true" md-autoselect="true"
 	                                        md-items="item in ctlidmanager.querySearch(ctlidmanager.searchText)"
 	                                        md-selected-item="ctlidmanager.selectedItem"
 	                                        md-selected-item-change="ctlidmanager.selectedItemChange(item)"
@@ -118,7 +123,7 @@
                             		<div class="input-group col-sm-12">
 	                                    <md-autocomplete
 	                                    	md-input-name="idcalendar" required md-require-match
-	                                    	md-min-length="0" md-clear-button="true"
+	                                    	md-min-length="0" md-clear-button="true" md-select-on-match="true" md-autoselect="true"
 	                                        md-items="item in ctlidcalendar.querySearch(ctlidcalendar.searchText)"
 	                                        md-selected-item="ctlidcalendar.selectedItem"
 	                                        md-selected-item-change="ctlidcalendar.selectedItemChange(item)"
@@ -167,8 +172,8 @@
 	                            <div class="form-group col-sm-12">
 	                                <div class="input-group col-sm-12">
 	                                    <md-autocomplete
-	                                    	md-input-name="idproject"
-	                                    	md-min-length="0" md-clear-button="true"
+	                                    	md-input-name="idproject" md-require-match
+	                                    	md-min-length="0" md-clear-button="true" md-select-on-match="true" md-autoselect="true"
 	                                        md-selected-item="ctlidproject.selectedItem"
 	                                        md-search-text-change="ctlidproject.searchTextChange(ctlidproject.searchText)"
 	                                        md-search-text="ctlidproject.searchText" md-selected-item-change="ctlidproject.selectedItemChange(item)"
@@ -178,6 +183,9 @@
 	                                        <md-item-template>
 	                                            <span md-highlight-text="ctlidproject.searchText" md-highlight-flags="^i">{{ item.display }}</span>
 	                                        </md-item-template>
+	                                        <div ng-messages="(frmDirty || frmProject.idproject.$touched) && (frmProject.idproject.$error)">
+	                                            <div ng-message="md-require-match">{{ 'clientbuilding_home_no_item_matching' | translate }}</div>
+	                                        </div>
 	                                    </md-autocomplete>
 	                                </div>
 	                            </div>
@@ -186,8 +194,8 @@
 	                            <div class="form-group col-sm-12">
                             		<div class="input-group col-sm-12">
 	                                    <md-autocomplete
-	                                    	md-input-name="idclient"
-	                                    	md-min-length="0" md-clear-button="true"
+	                                    	md-input-name="idclient" md-require-match
+	                                    	md-min-length="0" md-clear-button="true" md-select-on-match="true" md-autoselect="true"
 	                                        md-items="item in ctlidclient.querySearch(ctlidclient.searchText)"
 	                                        md-selected-item="ctlidclient.selectedItem"
 	                                        md-selected-item-change="ctlidclient.selectedItemChange(item)"
@@ -198,6 +206,9 @@
 	                                        <md-item-template>
 	                                            <span md-highlight-text="ctlidclient.searchText" md-highlight-flags="^i">{{ item.display }}</span>
 	                                        </md-item-template>
+	                                        <div ng-messages="(frmDirty || frmProject.idclient.$touched) && (frmProject.idclient.$error)">
+	                                            <div ng-message="md-require-match">{{ 'clientbuilding_home_no_item_matching' | translate }}</div>
+	                                        </div>
 	                                    </md-autocomplete>
 	                                </div>
 	                            </div>
@@ -219,8 +230,8 @@
 	                            <div class="form-group col-sm-12">
                             		<div class="input-group col-sm-12">
 	                                    <md-autocomplete
-	                                    	md-input-name="idcontact"
-	                                    	md-min-length="0" md-clear-button="true"
+	                                    	md-input-name="idcontact" md-require-match
+	                                    	md-min-length="0" md-clear-button="true" md-select-on-match="true" md-autoselect="true"
 	                                        md-items="item in ctlidcontact.querySearch(ctlidcontact.searchText)"
 	                                        md-selected-item="ctlidcontact.selectedItem"
 	                                        md-selected-item-change="ctlidcontact.selectedItemChange(item)"
@@ -231,6 +242,9 @@
 	                                        <md-item-template>
 	                                            <span md-highlight-text="ctlidcontact.searchText" md-highlight-flags="^i">{{ item.display }}</span>
 	                                        </md-item-template>
+	                                        <div ng-messages="(frmDirty || frmProject.idcontact.$touched) && (frmProject.idcontact.$error)">
+	                                            <div ng-message="md-require-match">{{ 'clientbuilding_home_no_item_matching' | translate }}</div>
+	                                        </div>
 	                                    </md-autocomplete>
 	                                </div>
 	                            </div>
@@ -252,7 +266,10 @@
 								<div class="form-group col-sm-12">
 	                                <md-input-container>
 	                                    <label>{{'clientbuilding_project_donedate' | translate}}</label>
-	                                    <md-datepicker name="donedate" ng-model="project.donedate" md-placeholder="{{'clientbuilding_project_donedate' | translate}}" md-open-on-focus></md-datepicker>
+	                                    <md-datepicker name="donedate" ng-model="project.donedate" md-hide-icons="calendar" md-placeholder="{{'clientbuilding_project_donedate' | translate}}" md-open-on-focus></md-datepicker>
+	                                </md-input-container>
+									<md-input-container>
+	                                	<md-checkbox ng-checked="project.donedate != null" ng-click="checkDate('donedate')"></md-checkbox>
 	                                </md-input-container>
 								</div>
 								<!-- /donedate -->
@@ -260,7 +277,10 @@
 								<div class="form-group col-sm-12">
 	                                <md-input-container>
 	                                    <label>{{'clientbuilding_project_canceldate' | translate}}</label>
-	                                    <md-datepicker name="canceldate" ng-model="project.canceldate" md-placeholder="{{'clientbuilding_project_canceldate' | translate}}" md-open-on-focus></md-datepicker>
+	                                    <md-datepicker name="canceldate" ng-model="project.canceldate" md-hide-icons="calendar" md-placeholder="{{'clientbuilding_project_canceldate' | translate}}" md-open-on-focus></md-datepicker>
+	                                </md-input-container>
+	                                <md-input-container>
+	                                	<md-checkbox ng-checked="project.canceldate != null" ng-click="checkDate('canceldate')"></md-checkbox>
 	                                </md-input-container>
 								</div>
 								<!-- /canceldate -->
@@ -268,7 +288,10 @@
 								<div class="form-group col-sm-12">
 	                                <md-input-container>
 	                                    <label>{{'clientbuilding_project_closedate' | translate}}</label>
-	                                    <md-datepicker name="closedate" ng-model="project.closedate" md-placeholder="{{'clientbuilding_project_closedate' | translate}}" md-open-on-focus></md-datepicker>
+	                                    <md-datepicker name="closedate" ng-model="project.closedate" md-hide-icons="calendar" md-placeholder="{{'clientbuilding_project_closedate' | translate}}" md-open-on-focus></md-datepicker>
+	                                </md-input-container>
+	                                <md-input-container>
+	                                	<md-checkbox ng-checked="project.closedate != null" ng-click="checkDate('closedate')"></md-checkbox>
 	                                </md-input-container>
 								</div>
 								<!-- /closedate -->
@@ -298,32 +321,38 @@
 				</md-card-content>
 				<!-- /Content -->
 				<!-- Bottom actions -->
-				<div class="panel-footer">
+				<div class="panel-heading">
 					<div class="row">
 						<div class="btn-group pull-right">
-							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-click="save()">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="refreshForm()">
+								<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">refresh</md-icon>
+							</md-button>
+							
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="save()">
 								<md-tooltip>{{'clientbuilding_home_save' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">save</md-icon>
 							</md-button>
 
-							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="createOnForm()">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-disabled="isServerCalling" ng-click="createOnForm()">
 								<md-tooltip>{{'clientbuilding_home_create' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">add</md-icon>
 							</md-button>
 
-							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="project.id > -1" ng-click="deleteOnForm()"
+							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="project.id > -1" ng-disabled="isServerCalling" ng-click="deleteOnForm()"
 								md-colors="{background: 'default-red'}">
 								<md-tooltip md-direction="top">{{'clientbuilding_home_delete' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">delete</md-icon>
 							</md-button>
 							
-							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeDialog()">
+							<md-button class="md-icon-button test-tooltip md-raised" ng-disabled="isServerCalling" ng-click="closeFormDialog()">
 								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
 								<md-icon md-font-library="material-icons">close</md-icon>
 							</md-button>
 						</div>
 					</div>
 				</div>
+				<!-- Bottom actions -->
 			</div>
 		</form>
 	</md-card>

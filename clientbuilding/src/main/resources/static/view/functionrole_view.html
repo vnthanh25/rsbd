@@ -1,0 +1,92 @@
+
+<div>
+	<md-card>
+		<form name="frmFunctionrole" novalidate class="css-form">
+			<!-- title -->
+			<md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">{{'clientbuilding_functionrole_title' | translate}}</span>
+                </md-card-title-text>
+            </md-card-title>
+			<!-- /title -->
+			<div class="panel panel-default">
+				<!-- Top actions -->
+				<div class="panel-heading">
+					<div class="row">
+						<div class="btn-group pull-right">
+							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeViewDialog()">
+								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">close</md-icon>
+							</md-button>
+						</div>
+					</div>
+				</div>
+				<!-- /Top actions -->
+				<!-- Content -->
+				<md-card-content>
+					<div class="row">
+						
+						<!-- First column -->
+						<div class="col-sm-6">
+							<div class="form-vertical">
+								<!-- name -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmFunctionrole.name.$touched) && (frmFunctionrole.name.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_functionrole_name' | translate}}</label>
+										<input md-input md-no-asterisk name="name" ng-model="functionrole.name" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /name -->
+								<!-- description -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmFunctionrole.description.$touched) && (frmFunctionrole.description.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_functionrole_description' | translate}}</label>
+										<input md-input md-no-asterisk name="description" ng-model="functionrole.description" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /description -->
+								<!-- sortorder -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmFunctionrole.sortorder.$touched) && (frmFunctionrole.sortorder.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_functionrole_sortorder' | translate}}</label>
+										<input md-input md-no-asterisk name="sortorder" ng-model="functionrole.sortorder" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /sortorder -->
+								<!-- defaultcost -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmFunctionrole.defaultcost.$touched) && (frmFunctionrole.defaultcost.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_functionrole_defaultcost' | translate}}</label>
+										<input md-input md-no-asterisk name="defaultcost" ng-model="functionrole.defaultcost" ng-disabled="true">
+									</md-input-container>
+								</div>
+								<!-- /defaultcost -->
+							</div>
+						</div>
+						<!-- /First column -->
+						
+						<!-- Second column -->
+						<div class="col-sm-6">
+							<div class="form-vertical">
+							
+							</div>
+						</div>
+						<!-- /Second column -->
+					</div>
+				</md-card-content>
+				<!-- /Content -->
+				<!-- Bottom actions -->
+				<div class="panel-footer">
+					<div class="row">
+						<div class="btn-group pull-right">
+							<md-button class="md-icon-button test-tooltip md-raised" ng-click="closeViewDialog()">
+								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">close</md-icon>
+							</md-button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</md-card>
+</div>

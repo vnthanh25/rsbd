@@ -1,0 +1,190 @@
+
+		<div class="panel panel-default">
+			<!-- Top actions -->
+			<div class="panel-heading">
+				<div class="row">
+					<div class="btn-group pull-right">
+						<button class="btn btn-info" ng-click="showDialog(this)" data-toggle="tooltip" title="dialog">
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+						<button class="btn btn-info" ng-click="showDialogWithController(this)" data-toggle="tooltip" title="showDialogWithController">
+							<span class="glyphicon glyphicon-edit">showDialogWithController</span>
+						</button>
+						<button class="btn btn-info" ng-click="resizeFormScreen($event)" data-toggle="tooltip" title="min max">
+							<span id="imgSmallFull" class="glyphicon glyphicon-resize-full"></span>
+						</button>
+						<button class="btn btn-info" ng-click="closeDialog()" data-toggle="tooltip" title="{{'clientbuilding_home_close' | translate}}">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<!-- Auto complete -->
+<div class="form-group col-sm-12">
+	<div class="input-group col-sm-12">
+        <md-autocomplete
+        	md-input-name="fieldname" md-require-match
+        	md-min-length="0" md-clear-button="true" md-select-on-match="true" md-autoselect="true"
+            md-items="item in ctlfieldname.querySearch(ctlfieldname.searchText)"
+            md-selected-item="ctlfieldname.selectedItem"
+            md-selected-item-change="ctlfieldname.selectedItemChange(item)"
+            md-search-text="ctlfieldname.searchText"
+            md-search-text-change="ctlfieldname.searchTextChange(ctlfieldname.searchText)"
+            md-item-text="item.display"
+            md-floating-label="{{'clientbuilding_entity_fieldname' | translate}}">
+            <md-item-template>
+                <span md-highlight-text="ctlfieldname.searchText" md-highlight-flags="^i">{{ item.display }}</span>
+            </md-item-template>
+            <div ng-messages="(frmDirty || frmProject.fieldname.$touched) && (frmProject.fieldname.$error)">
+                <div ng-message="md-require-match">{{ 'clientbuilding_home_no_item_matching' | translate }}</div>
+            </div>
+        </md-autocomplete>
+    </div>
+</div>
+
+
+<!-- Multiple select -->
+
+<md-input-container>
+	<label>Title</label>
+	<md-select ng-model="selectedentityfields"
+		md-on-close="clearSearchentityfield()"
+		data-md-container-class="selectdemoSelectHeader"
+		multiple>
+		<md-select-header class="demo-select-header">
+			<input ng-model="searchentityfield" ng-keydown="searchentityfieldKeyDown($event)"
+				type="search"
+				placeholder="Search for a ..."
+				class="demo-header-searchbox md-text">
+    	</md-select-header>
+	    <md-optgroup label="Hint">
+			<md-option ng-value="item" ng-repeat="item in entityfields | filter:searchentityfield">{{item.name}}</md-option>
+	    </md-optgroup>
+	</md-select>
+</md-input-container>
+  
+<md-select class="multiselect" ng-model="searchentityfield" data-md-container-class="selectdemoSelectHeader" multiple="true" aria-label="Hint">
+	<md-optgroup>
+	    <md-option ng-value="item" ng-repeat="item in entityfields">{{item.name}}</md-option>
+	</md-optgroup>
+</md-select>
+
+<!-- Date picker -->
+<div class="input-group">
+	<input type="text"
+	       class="form-control"
+	       uib-datepicker-popup="{{dateFormat}}"
+	       ng-model="startDate"
+	       is-open="status.startDate"
+	       min-date="minDate"
+	       max-date="maxDate"
+	       datepicker-options="dateOptions"
+	       ng-required="true" 
+	       close-text="Close" 
+	       date-disabled="disabled(date, mode)"
+	/>
+	<span class="input-group-btn">
+	    <button type="button" 
+	    class="btn btn-default" 
+	    ng-click="status.startDate = true;">
+	      <i class="glyphicon glyphicon-calendar></i>
+	    </button>
+	</span>
+</div>
+<div class="input-group">
+	<input type="text"
+	       class="form-control"
+	       uib-datepicker-popup="{{dateFormat}}"
+	       ng-model="endDate"
+	       is-open="status.endDate"
+	       min-date="minDate"
+	       max-date="maxDate"
+	       datepicker-options="dateOptions"
+	       ng-required="true" 
+	       close-text="Close" 
+	       date-disabled="disabled(date, mode)"
+	/>
+	<span class="input-group-btn">
+	    <button type="button" 
+	    class="btn btn-default" 
+	    ng-click="status.endDate = true;">
+	      <i class="glyphicon glyphicon-calendar"></i>
+	    </button>
+	</span>
+</div>
+<div class="btn btn-default" ng-click="subtractTwoDate()">Subtract 2 dates</div>
+
+<!-- material datepicker -->
+<div class="form-group col-sm-12">
+    <md-input-container>
+        <label>{{'clientbuilding_entity_filename' | translate}}</label>
+        <md-datepicker name="filename" ng-model="entity.filename" md-hide-icons="calendar" md-placeholder="{{'clientbuilding_entity_filename' | translate}}" md-open-on-focus></md-datepicker>
+    </md-input-container>
+    <md-input-container>
+    	<md-checkbox ng-checked="entity.filename != null" ng-click="checkDate('filename')"></md-checkbox>
+    </md-input-container>
+</div>
+								
+<!-- angular-ckeditor -->
+<div ckeditor="ckoptions" class="form-control" type="text" id="description" name="description" ng-model="description"></div>
+
+<!-- gantt chart -->
+<!-- <div gantt data="data">
+	<gantt-tree></gantt-tree>
+	<gantt-groups></gantt-group>
+	<gantt-dependencies></gantt-dependencies>
+	<gantt-movable></gantt-movable>
+	<gantt-draw-task task-factory="factoryTask"></gantt-draw-task>
+</div>
+ --> 
+<!-- attachments -->
+<div class="row">
+	<label class="control-label col-sm-2" for="attachments">Attachments</label>
+	<div class="col-sm-8">
+		<div class="input-group">
+			<input type="file" class="filestyle" button-text="{{'clientbuilding_home_browse_file_title' | translate}}"
+				ng-click="fileClear($event)" id="attachments"
+				name="attachments" multiple ng-files="addAttachments($files)" />
+			<table class="table table-bordered">
+				<tr ng-repeat="attachment in attachments">
+					<td>{{attachment.filename}}</td>
+					<td>
+						<div ng-click="deleteAttachments(attachment.filename)">
+							<span class="glyphicon glyphicon-trash"></span>
+						</div>
+					</td>
+					<td>
+						<div ng-if="attachment.id != null">
+							<div
+								ng-click="downloadAttachments(milestone.id, attachment.filename)">
+								<span class="glyphicon glyphicon-download"></span>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="btn btn-default col-sm-2" ng-click="uploadAttachments(attachments, milestone.id)">{{'clientbuilding_home_upload' | translate}}</div>
+</div>
+
+
+<!-- Thumbnail image -->
+<div>
+	<input type="file" class="filestyle" button-text="{{'clientbuilding_home_browse_file_title' | translate}}"
+				ng-click="thumbnailImageFileClear($event)" id="thumbnailImage"
+				name="thumbnailImage" ng-files="addThumbnailImage($files)" />
+	<img alt="" data-ng-src="{{thumbnailImage}}" width="200px" height="200px"/>
+</div>
+
+<!-- Color picker: https://www.npmjs.com/package/angularjs-color-picker -->
+<color-picker ng-model="color"></color-picker>
+
+<script type="text/javascript">
+
+	// file style.
+	$(":file").filestyle();
+
+</script>
