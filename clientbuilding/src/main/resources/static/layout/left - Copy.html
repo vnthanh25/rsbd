@@ -1,0 +1,143 @@
+
+<section>
+	<ul class="sidebar-menu" ng-init="initLeft()" style="padding-top: 13px;">
+		<li>
+			<!-- menu search -->
+			<form ng-submit="menuSearch(menuSearhText)">
+				<div layout="row">
+					<div flex="grow" layout="row" layout-align="left" style="margin-left:5px">
+						<!-- <label class="control-label">{{'clientbuilding_home_search' | translate}}</label> -->
+						<input flex="grow" ng-model="menuSearhText" ng-change="menuSearch(menuSearhText)" placeholder="{{'clientbuilding_home_search' | translate}}" md-select-on-focus>
+						<div flex="auto" class="btn-group">
+							<div ng-click="menuSearhText='';menuSearch(menuSearhText)" class="btn md-icon-button test-tooltip">
+								<md-tooltip>{{'clientbuilding_home_filter_clear' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">clear</md-icon>
+							</div>
+						</div>
+					</div>
+
+					
+					
+				</div>
+			</form>
+			<!-- /menu search menu.home.label='{{'bimbuildui_left_home' | translate }}';-->
+		</li>
+		
+		<li ng-model="menu.home.label" ng-hide="menu.home.hide" ng-init="menu.home.hide=false" ng-click="goto('home');">
+			<a> <span ng-bind="menu.home.label">{{'bimbuildui_left_home' | translate }}</span> </a>
+		</li>
+		<li ng-hide="menu.test.hide" ng-init="menu.test.label='{{'bimbuildui_left_test' | translate }}';menu.test.hide=false" ng-click="goto('test');">
+			<a> <span>{{'bimbuildui_left_test' | translate }}</span> </a>
+		</li>
+
+		<li ng-hide="menu.user.hide && menu.permission.hide">
+			<a href="">
+				<span>User Management</span>
+				<img src="/clientbuilding/image/arrow.png" width="24" height="24" align="right">
+			</a>
+			<ul class="sidebar-submenu">
+				<li ng-hide="menu.user.hide" ng-init="menu.user.label='{{'bimbuildui_left_user' | translate }}';menu.user.hide=false" ng-click="goto('user');" ng-if="permissions.user">
+					<a> <span>User</span> </a>
+				</li>
+				<li ng-hide="menu.permission.hide" ng-init="menu.permission.label='{{'bimbuildui_left_permission' | translate }}';menu.permission.hide=false" ng-click="goto('permission');">
+					<a><span>Permission</span></a>
+				</li>
+			</ul>
+		</li>
+		
+
+		<li ng-hide="menu.user.hide && menu.permission.hide">
+			<a href="">
+				<span>{{'bimbuildui_left_type' | translate }}</span>
+				<img src="/clientbuilding/image/arrow.png" width="24" height="24" align="right">
+			</a>
+			<ul class="sidebar-submenu">
+				<li ng-hide="menu.projecttype.hide" ng-init="menu.projecttype.label='{{'bimbuildui_left_projecttype' | translate }}';menu.projecttype.hide=false" ng-click="goto('type', 'project');">
+					<a> <span>{{'bimbuildui_left_type_project' | translate }}</span> </a>
+				</li>
+				<li ng-hide="menu.projectactivity.hide" ng-init="menu.projectactivity.label='{{'bimbuildui_left_projectactivity' | translate }}';menu.projectactivity.hide=false" ng-click="goto('permission');">
+					<a><span>{{'bimbuildui_left_type_activity' | translate }}</span></a>
+				</li>
+			</ul>
+		</li>
+		
+		<li ng-hide="menu.activity.hide" ng-init="menu.activity.label='{{'bimbuildui_left_activity' | translate }}';menu.activity.hide=false" ng-click="goto('activity');">
+			<a> <span>Activity</span> </a>
+		</li>
+		<li ng-hide="menu.affectation.hide" ng-init="menu.affectation.label='{{'bimbuildui_left_affectation' | translate }}';menu.affectation.hide=false" ng-click="goto('affectation');">
+			<a> <span>Affectation</span> </a>
+		</li>
+		<li ng-hide="menu.appconfig.hide" ng-init="menu.appconfig.label='{{'bimbuildui_left_appconfig' | translate }}';menu.appconfig.hide=false" ng-click="goto('appconfig');">
+			<a> <span>Appconfig</span> </a>
+		</li>
+		<li ng-hide="menu.assignment.hide" ng-init="menu.assignment.label='{{'bimbuildui_left_assignment' | translate }}';menu.assignment.hide=false" ng-click="goto('assignment');">
+			<a> <span>Assignment</span> </a>
+		</li>
+		<li ng-hide="menu.attachment.hide" ng-init="menu.attachment.label='{{'bimbuildui_left_attachment' | translate }}';menu.attachment.hide=false" ng-click="goto('attachment');">
+			<a> <span>Attachment</span> </a>
+		</li>
+		<li ng-hide="menu.baseline.hide" ng-init="menu.baseline.label='{{'bimbuildui_left_baseline' | translate }}';menu.baseline.hide=false" ng-click="goto('baseline');">
+			<a> <span>Baseline</span> </a>
+		</li>
+		<li ng-hide="menu.client.hide" ng-init="menu.client.label='{{'bimbuildui_left_client' | translate }}';menu.client.hide=false" ng-click="goto('client');">
+			<a> <span>Client</span> </a>
+		</li>
+		<li ng-hide="menu.comment.hide" ng-init="menu.comment.label='{{'bimbuildui_left_comment' | translate }}';menu.comment.hide=false" ng-click="goto('comment');">
+			<a> <span>Comment</span> </a>
+		</li>
+		<li ng-hide="menu.dependable.hide" ng-init="menu.dependency.label='{{'bimbuildui_left_activity' | translate }}';menu.dependable.hide=false" ng-click="goto('dependable');">
+			<a> <span>Dependable</span> </a>
+		</li>
+		<li ng-hide="menu.dependency.hide" ng-init="menu.dependency.label='{{'bimbuildui_left_dependency' | translate }}';menu.dependency.hide=false" ng-click="goto('dependency');">
+			<a> <span>Dependency</span> </a>
+		</li>
+		<li ng-hide="menu.functionrole.hide" ng-init="menu.functionrole.label='{{'bimbuildui_left_functionrole' | translate }}';menu.functionrole.hide=false" ng-click="goto('functionrole');">
+			<a> <span>Functionrole</span> </a>
+		</li>
+		<li ng-hide="menu.history.hide" ng-init="menu.notify.label='{{'bimbuildui_left_activity' | translate }}';menu.history.hide=false" ng-click="goto('history');">
+			<a> <span>History</span> </a>
+		</li>
+		<li ng-hide="menu.notify.hide" ng-init="menu.notify.label='{{'bimbuildui_left_notify' | translate }}';menu.notify.hide=false" ng-click="goto('notify');">
+			<a> <span>Notify</span> </a>
+		</li>
+		<li ng-hide="menu.plannedwork.hide" ng-init="menu.plannedwork.label='{{'bimbuildui_left_plannedwork' | translate }}';menu.plannedwork.hide=false" ng-click="goto('plannedwork');">
+			<a> <span>Plannedwork</span> </a>
+		</li>
+		<li ng-hide="menu.plannedworkbaseline.hide" ng-init="menu.plannedworkbaseline.label='{{'bimbuildui_left_plannedworkbaseline' | translate }}';menu.plannedworkbaseline.hide=false" ng-click="goto('plannedworkbaseline');">
+			<a> <span>Plannedworkbaseline</span> </a>
+		</li>
+		<li ng-hide="menu.planningelement.hide" ng-init="menu.planningelementbaseline.label='{{'bimbuildui_left_activity' | translate }}';menu.planningelement.hide=false" ng-click="goto('planningelement');">
+			<a> <span>Planningelement</span> </a>
+		</li>
+		<li ng-hide="menu.planningelementbaseline.hide" ng-init="menu.planningelementbaseline.label='{{'bimbuildui_left_planningelementbaseline' | translate }}';menu.planningelementbaseline.hide=false" ng-click="goto('planningelementbaseline');">
+			<a> <span>Planningelementbaseline</span> </a>
+		</li>
+		<li ng-hide="menu.planningmode.hide" ng-init="menu.planningmode.label='{{'bimbuildui_left_planningmode' | translate }}';menu.planningmode.hide=false" ng-click="goto('planningmode');">
+			<a> <span>Planningmode</span> </a>
+		</li>
+		<li ng-hide="menu.project.hide" ng-init="menu.role.label='{{'bimbuildui_left_activity' | translate }}';menu.project.hide=false" ng-click="goto('project');">
+			<a> <span>Project</span> </a>
+		</li>
+		<li ng-hide="menu.role.hide" ng-init="menu.role.label='{{'bimbuildui_left_role' | translate }}';menu.role.hide=false" ng-click="goto('role');">
+			<a> <span>Role</span> </a>
+		</li>
+		<li ng-hide="menu.status.hide" ng-init="menu.userrole.label='{{'bimbuildui_left_activity' | translate }}';menu.status.hide=false" ng-click="goto('status');">
+			<a> <span>Status</span> </a>
+		</li>
+		<li ng-hide="menu.userrole.hide" ng-init="menu.userrole.label='{{'bimbuildui_left_userrole' | translate }}';menu.userrole.hide=false" ng-click="goto('userrole');">
+			<a> <span>Userrole</span> </a>
+		</li>
+		<li ng-hide="menu.work.hide" ng-init="menu.work.label='{{'bimbuildui_left_work' | translate }}';menu.work.hide=false" ng-click="goto('work');">
+			<a> <span>Work</span> </a>
+		</li>
+		<li ng-hide="menu.workelement.hide" ng-init="menu.workelement.label='{{'bimbuildui_left_workelement' | translate }}';menu.workelement.hide=false" ng-click="goto('workelement');">
+			<a> <span>Workelement</span> </a>
+		</li>
+		<li ng-hide="menu.workflow.hide" ng-init="menu.workflow.label='{{'bimbuildui_left_workflow' | translate }}';menu.workflow.hide=false" ng-click="goto('workflow');">
+			<a> <span>Workflow</span> </a>
+		</li>
+		<li ng-hide="menu.workflowstatus.hide" ng-init="menu.workflowstatus.label='{{'bimbuildui_left_workflowstatus' | translate }}';menu.workflowstatus.hide=false" ng-click="goto('workflowstatus');">
+			<a> <span>Workflowstatus</span> </a>
+		</li>
+	</ul>
+</section>

@@ -2,130 +2,142 @@
 <section>
 	<ul class="sidebar-menu" style="padding-top: 13px;">
 		<li>
+			<!-- menu search -->
 			<form ng-submit="menuSearch(menuSearhText)">
 				<div layout="row">
-					<md-input-container flex="grow" class="md-block">
-						<label class="control-label">{{'clientbuilding_home_search' | translate}}</label>
-						<input ng-model="menuSearhText" md-input md-no-asterisk md-select-on-focus>
-					</md-input-container>
-
-					<div flex="auto" class="btn-group">
-						<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" type="submit">
-							<md-tooltip>{{'clientbuilding_home_search' | translate}}</md-tooltip>
-							<md-icon md-font-library="material-icons">search</md-icon>
-						</md-button>
+					<div flex="grow" layout="row" layout-align="left" style="margin-left:5px">
+						<!-- <label class="control-label">{{'clientbuilding_home_search' | translate}}</label> -->
+						<input flex="grow" ng-model="menuSearhText" ng-change="menuSearch(menuSearhText)" placeholder="{{'clientbuilding_home_search' | translate}}" md-select-on-focus>
+						<div flex="auto" class="btn-group">
+							<div ng-click="menuSearhText='';menuSearch(menuSearhText)" class="btn md-icon-button test-tooltip">
+								<md-tooltip>{{'clientbuilding_home_filter_clear' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">clear</md-icon>
+							</div>
+						</div>
 					</div>
+
+					
+					
 				</div>
 			</form>
-		</li>
-
-		<li ng-hide="menu.user.hide && menu.permission.hide">
-			<a href="">
-				<span>User Management</span>
-				<img src="/clientbuilding/image/arrow.png" width="24" height="24" align="right">
-			</a>
-			<ul class="sidebar-submenu">
-				<li ng-hide="menu.user.hide" ng-init="menu.user.hide=false" ng-click="goto('user');" ng-if="permissions.user">
-					<a> <span>User</span> </a>
-				</li>
-				<li ng-hide="menu.permission.hide" ng-init="menu.permission.hide=false" ng-click="goto('permission');">
-					<a><span>Permission</span></a>
-				</li>
-			</ul>
+			<!-- /menu search -->
 		</li>
 		
 		<li ng-hide="menu.home.hide" ng-init="menu.home.hide=false" ng-click="goto('home');">
-			<a> <span>Home</span> </a>
+			<a> <span>{{menu.home.label}}</span> </a>
 		</li>
 		<li ng-hide="menu.test.hide" ng-init="menu.test.hide=false" ng-click="goto('test');">
-			<a> <span>Test</span> </a>
+			<a> <span>{{menu.test.label}}</span> </a>
 		</li>
-		<li ng-hide="menu.activity.hide" ng-init="menu.activity.hide=false" ng-click="goto('activity');">
-			<a> <span>Activity</span> </a>
+		<!-- user manager -->
+		<li ng-hide="menu.user.hide && menu.permission.hide" ng-init="menu.usermanager.hide=false">
+			<a href="">
+				<span>{{menu.usermanager.label}}</span>
+				<img src="/clientbuilding/image/arrow.png" width="24" height="24" align="right">
+			</a>
+			<ul class="sidebar-submenu">
+				<li ng-hide="menu.user.hide" ng-init="menu.user.hide=false" ng-click="goto('user');">
+					<a> <span>{{menu.user.label}}</span> </a>
+				</li>
+				<li ng-hide="menu.role.hide" ng-init="menu.role.hide=false" ng-click="goto('role');">
+					<a> <span>Role</span> </a>
+				</li>
+				<li ng-hide="menu.userrole.hide" ng-init="menu.userrole.hide=false" ng-click="goto('userrole');">
+					<a> <span>Userrole</span> </a>
+				</li>
+				<li ng-hide="menu.permission.hide" ng-init="menu.permission.hide=false" ng-click="goto('permission');">
+					<a><span>{{menu.permission.label}}</span></a>
+				</li>
+			</ul>
 		</li>
-		<li ng-hide="menu.affectation.hide" ng-init="menu.affectation.hide=false" ng-click="goto('affectation');">
-			<a> <span>Affectation</span> </a>
+		<!-- /user manager -->
+		<!-- type -->
+		<li ng-hide="menu.projecttype.hide && menu.activitytype.hide" ng-init="menu.type.hide=false">
+			<a href="">
+				<span>{{menu.type.label}}</span>
+				<img src="/clientbuilding/image/arrow.png" width="24" height="24" align="right">
+			</a>
+			<ul class="sidebar-submenu">
+				<li ng-hide="menu.projecttype.hide" ng-init="menu.projecttype.hide=false" ng-click="goto('type', 'project');">
+					<a> <span>{{menu.projecttype.label}}</span> </a>
+				</li>
+				<li ng-hide="menu.activitytype.hide" ng-init="menu.activitytype.hide=false" ng-click="goto('type', 'activity');">
+					<a><span>{{menu.activitytype.label}}</span></a>
+				</li>
+			</ul>
 		</li>
-		<li ng-hide="menu.appconfig.hide" ng-init="menu.appconfig.hide=false" ng-click="goto('appconfig');">
-			<a> <span>Appconfig</span> </a>
-		</li>
-		<li ng-hide="menu.assignment.hide" ng-init="menu.assignment.hide=false" ng-click="goto('assignment');">
-			<a> <span>Assignment</span> </a>
-		</li>
-		<li ng-hide="menu.attachment.hide" ng-init="menu.attachment.hide=false" ng-click="goto('attachment');">
-			<a> <span>Attachment</span> </a>
-		</li>
-		<li ng-hide="menu.baseline.hide" ng-init="menu.baseline.hide=false" ng-click="goto('baseline');">
-			<a> <span>Baseline</span> </a>
-		</li>
-		<li ng-hide="menu.client.hide" ng-init="menu.client.hide=false" ng-click="goto('client');">
-			<a> <span>Client</span> </a>
-		</li>
-		<li ng-hide="menu.comment.hide" ng-init="menu.comment.hide=false" ng-click="goto('comment');">
-			<a> <span>Comment</span> </a>
-		</li>
-		<li ng-hide="menu.dependable.hide" ng-init="menu.dependable.hide=false" ng-click="goto('dependable');">
-			<a> <span>Dependable</span> </a>
-		</li>
-		<li ng-hide="menu.dependency.hide" ng-init="menu.dependency.hide=false" ng-click="goto('dependency');">
-			<a> <span>Dependency</span> </a>
-		</li>
+		<!-- /type -->
 		<li ng-hide="menu.functionrole.hide" ng-init="menu.functionrole.hide=false" ng-click="goto('functionrole');">
-			<a> <span>Functionrole</span> </a>
-		</li>
-		<li ng-hide="menu.history.hide" ng-init="menu.history.hide=false" ng-click="goto('history');">
-			<a> <span>History</span> </a>
-		</li>
-		<li ng-hide="menu.notify.hide" ng-init="menu.notify.hide=false" ng-click="goto('notify');">
-			<a> <span>Notify</span> </a>
-		</li>
-		<li ng-hide="menu.permission.hide" ng-init="menu.permission.hide=false" ng-click="goto('permission');">
-			<a> <span>Permission</span> </a>
-		</li>
-		<li ng-hide="menu.plannedwork.hide" ng-init="menu.plannedwork.hide=false" ng-click="goto('plannedwork');">
-			<a> <span>Plannedwork</span> </a>
-		</li>
-		<li ng-hide="menu.plannedworkbaseline.hide" ng-init="menu.plannedworkbaseline.hide=false" ng-click="goto('plannedworkbaseline');">
-			<a> <span>Plannedworkbaseline</span> </a>
-		</li>
-		<li ng-hide="menu.planningelement.hide" ng-init="menu.planningelement.hide=false" ng-click="goto('planningelement');">
-			<a> <span>Planningelement</span> </a>
-		</li>
-		<li ng-hide="menu.planningelementbaseline.hide" ng-init="menu.planningelementbaseline.hide=false" ng-click="goto('planningelementbaseline');">
-			<a> <span>Planningelementbaseline</span> </a>
-		</li>
-		<li ng-hide="menu.planningmode.hide" ng-init="menu.planningmode.hide=false" ng-click="goto('planningmode');">
-			<a> <span>Planningmode</span> </a>
+			<a> <span>{{menu.functionrole.label}}</span> </a>
 		</li>
 		<li ng-hide="menu.project.hide" ng-init="menu.project.hide=false" ng-click="goto('project');">
-			<a> <span>Project</span> </a>
+			<a> <span>{{menu.project.label}}</span> </a>
 		</li>
-		<li ng-hide="menu.role.hide" ng-init="menu.role.hide=false" ng-click="goto('role');">
-			<a> <span>Role</span> </a>
+		<li ng-hide="menu.activity.hide" ng-init="menu.activity.hide=false" ng-click="goto('activity');">
+			<a> <span>{{menu.activity.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.affectation.hide" ng-init="menu.affectation.hide=false" ng-click="goto('affectation');">
+			<a> <span>{{menu.affectation.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.appconfig.hide" ng-init="menu.appconfig.hide=false" ng-click="goto('appconfig');">
+			<a> <span>{{menu.appconfig.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.assignment.hide" ng-init="menu.assignment.hide=false" ng-click="goto('assignment');">
+			<a> <span>{{menu.assignment.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.attachment.hide" ng-init="menu.attachment.hide=false" ng-click="goto('attachment');">
+			<a> <span>{{menu.attachment.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.baseline.hide" ng-init="menu.baseline.hide=false" ng-click="goto('baseline');">
+			<a> <span>{{menu.baseline.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.client.hide" ng-init="menu.client.hide=false" ng-click="goto('client');">
+			<a> <span>{{menu.client.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.comment.hide" ng-init="menu.comment.hide=false" ng-click="goto('comment');">
+			<a> <span>{{menu.comment.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.dependable.hide" ng-init="menu.dependable.hide=false" ng-click="goto('dependable');">
+			<a> <span>{{menu.dependable.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.dependency.hide" ng-init="menu.dependency.hide=false" ng-click="goto('dependency');">
+			<a> <span>{{menu.dependency.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.history.hide" ng-init="menu.history.hide=false" ng-click="goto('history');">
+			<a> <span>{{menu.history.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.notify.hide" ng-init="menu.notify.hide=false" ng-click="goto('notify');">
+			<a> <span>{{menu.notify.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.plannedwork.hide" ng-init="menu.plannedwork.hide=false" ng-click="goto('plannedwork');">
+			<a> <span>{{menu.plannedwork.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.plannedworkbaseline.hide" ng-init="menu.plannedworkbaseline.hide=false" ng-click="goto('plannedworkbaseline');">
+			<a> <span>{{menu.plannedworkbaseline.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.planningelement.hide" ng-init="menu.planningelement.hide=false" ng-click="goto('planningelement');">
+			<a> <span>{{menu.planningelement.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.planningelementbaseline.hide" ng-init="menu.planningelementbaseline.hide=false" ng-click="goto('planningelementbaseline');">
+			<a> <span>{{menu.planningelementbaseline.label}}</span> </a>
+		</li>
+		<li ng-hide="menu.planningmode.hide" ng-init="menu.planningmode.hide=false" ng-click="goto('planningmode');">
+			<a> <span>{{menu.planningmode.label}}</span> </a>
 		</li>
 		<li ng-hide="menu.status.hide" ng-init="menu.status.hide=false" ng-click="goto('status');">
-			<a> <span>Status</span> </a>
-		</li>
-		<li ng-hide="menu.type.hide" ng-init="menu.type.hide=false" ng-click="goto('type');">
-			<a> <span>Type</span> </a>
-		</li>
-		<li ng-hide="menu.user.hide" ng-init="menu.user.hide=false" ng-click="goto('user');">
-			<a> <span>User</span> </a>
-		</li>
-		<li ng-hide="menu.userrole.hide" ng-init="menu.userrole.hide=false" ng-click="goto('userrole');">
-			<a> <span>Userrole</span> </a>
+			<a> <span>{{menu.status.label}}</span> </a>
 		</li>
 		<li ng-hide="menu.work.hide" ng-init="menu.work.hide=false" ng-click="goto('work');">
-			<a> <span>Work</span> </a>
+			<a> <span>{{menu.work.label}}</span> </a>
 		</li>
 		<li ng-hide="menu.workelement.hide" ng-init="menu.workelement.hide=false" ng-click="goto('workelement');">
-			<a> <span>Workelement</span> </a>
+			<a> <span>{{menu.workelement.label}}</span> </a>
 		</li>
 		<li ng-hide="menu.workflow.hide" ng-init="menu.workflow.hide=false" ng-click="goto('workflow');">
-			<a> <span>Workflow</span> </a>
+			<a> <span>{{menu.workflow.label}}</span> </a>
 		</li>
 		<li ng-hide="menu.workflowstatus.hide" ng-init="menu.workflowstatus.hide=false" ng-click="goto('workflowstatus');">
-			<a> <span>Workflowstatus</span> </a>
+			<a> <span>{{menu.workflowstatus.label}}</span> </a>
 		</li>
 	</ul>
 </section>

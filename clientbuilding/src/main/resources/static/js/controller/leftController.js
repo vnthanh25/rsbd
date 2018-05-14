@@ -12,6 +12,42 @@ define(['require', 'angular'], function (require, angular) {
 		
 		var unRegister = $rootScope.$on('$translateChangeSuccess', function () {
 		    $scope.title = $translate.instant('clientbuilding_left_title');
+		    // menu label.
+		    $scope.menu.home.label = $translate.instant('clientbuilding_left_home');
+		    $scope.menu.test.label = $translate.instant('clientbuilding_left_test');
+		    $scope.menu.usermanager.label = $translate.instant('clientbuilding_left_usermanager');
+		    $scope.menu.user.label = $translate.instant('clientbuilding_left_user');
+		    $scope.menu.role.label = $translate.instant('clientbuilding_left_role');
+		    $scope.menu.userrole.label = $translate.instant('clientbuilding_left_userrole');
+		    $scope.menu.permission.label = $translate.instant('clientbuilding_left_permission');
+		    $scope.menu.project.label = $translate.instant('clientbuilding_left_project');
+		    $scope.menu.activity.label = $translate.instant('clientbuilding_left_activity');
+		    $scope.menu.type.label = $translate.instant('clientbuilding_left_type');
+		    $scope.menu.projecttype.label = $translate.instant('clientbuilding_left_projecttype');
+		    $scope.menu.activitytype.label = $translate.instant('clientbuilding_left_activitytype');
+		    $scope.menu.affectation.label = $translate.instant('clientbuilding_left_affectation');
+		    $scope.menu.appconfig.label = $translate.instant('clientbuilding_left_appconfig');
+		    $scope.menu.assignment.label = $translate.instant('clientbuilding_left_assignment');
+		    $scope.menu.attachment.label = $translate.instant('clientbuilding_left_attachment');
+		    $scope.menu.baseline.label = $translate.instant('clientbuilding_left_baseline');
+		    $scope.menu.client.label = $translate.instant('clientbuilding_left_client');
+		    $scope.menu.comment.label = $translate.instant('clientbuilding_left_comment');
+		    $scope.menu.dependable.label = $translate.instant('clientbuilding_left_dependable');
+		    $scope.menu.dependency.label = $translate.instant('clientbuilding_left_dependency');
+		    $scope.menu.functionrole.label = $translate.instant('clientbuilding_left_functionrole');
+		    $scope.menu.history.label = $translate.instant('clientbuilding_left_history');
+		    $scope.menu.notify.label = $translate.instant('clientbuilding_left_notify');
+		    $scope.menu.plannedwork.label = $translate.instant('clientbuilding_left_plannedwork');
+		    $scope.menu.plannedworkbaseline.label = $translate.instant('clientbuilding_left_plannedworkbaseline');
+		    $scope.menu.planningelement.label = $translate.instant('clientbuilding_left_planningelement');
+		    $scope.menu.planningelementbaseline.label = $translate.instant('clientbuilding_left_planningelementbaseline');
+		    $scope.menu.planningmode.label = $translate.instant('clientbuilding_left_planningmode');
+		    $scope.menu.status.label = $translate.instant('clientbuilding_left_status');
+		    $scope.menu.work.label = $translate.instant('clientbuilding_left_work');
+		    $scope.menu.workelement.label = $translate.instant('clientbuilding_left_workelement');
+		    $scope.menu.workflow.label = $translate.instant('clientbuilding_left_workflow');
+		    $scope.menu.workflowstatus.label = $translate.instant('clientbuilding_left_workflowstatus');
+		    
 		});
 		// Unregister
 		$scope.$on('$destroy', function () {
@@ -71,12 +107,23 @@ define(['require', 'angular'], function (require, angular) {
 			
 			$scope.sidebarMenu($('.sidebar-menu'));
 			
-			$scope.menuSearch = function(text){
-				angular.forEach($scope.menu, function(value, key){
-					$scope.menu[key].hide = key.toLowerCase().indexOf(text.toLowerCase()) < 0;
-				});
-			}
+			// spliter.
+			$('#widget').width('100%').height('100%').split({
+				orientation: 'vertical',
+				limit: 10,
+				position: '20%',
+				percent: true
+			});
+
 		});
+		
+		// menu search.
+		$scope.menuSearch = function(text){
+			angular.forEach($scope.menu, function(value, key){
+				$scope.menu[key].hide = $scope.menu[key].label.toLowerCase().indexOf(text.toLowerCase()) < 0;
+			});
+		}
+		
 	});
 	
 });

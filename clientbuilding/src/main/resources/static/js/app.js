@@ -176,7 +176,8 @@ define(['require', 'angular', 'bootstrap',
     					clientbuilding.contextPath + '/js/util/validation_tooltip/directive.js',
     					clientbuilding.contextPath + '/js/util/upload-files-directive.js',
     					clientbuilding.contextPath + '/js/util/file-style-directive.js',
-    					clientbuilding.contextPath + '/js/util/dualmultiselect-directive.js'
+    					clientbuilding.contextPath + '/js/util/dualmultiselect-directive.js',
+    					clientbuilding.contextPath + '/lib/jcubic-jquery.splitter/js/jquery.splitter-0.14.0.js'
     					], function() {
     						clientmain.loadFile(clientbuilding.contextPath + '/js/util/validation_tooltip/validation-tooltip.css', 'css');
     						clientmain.loadFile(clientbuilding.contextPath + '/css/layout.css', 'css');
@@ -264,9 +265,12 @@ define(['require', 'angular', 'bootstrap',
 		// Set server url.
 		clientbuilding.serverUrl = 'http://localhost:4449/serverbuilding';
 		
-		$rootScope.clientbuildingsidebarclick = function() {
+		$rootScope.clientmainsidebarclick = function() {
 			$('.main-sidebar').toggleClass('collapse');
 			$('.main-content').toggleClass('expanse');
+			$('.vsplitter').toggleClass('collapse');
+			//$('.left_panel').toggleClass('collapse');
+			$('.right_panel').toggleClass('collapse');
 		};
 
 		$rootScope.closeNav = function() {

@@ -28,6 +28,14 @@ footer {
     margin-left: auto;
 }
 
+.splitter {
+  flex: 0 0 auto;
+  width: 18px;  
+  background: url(/clientbuilding/image/vsizegrip.png) center center no-repeat #535353;
+  min-height: 200px;
+  cursor: col-resize;  
+}
+
 @media screen and (min-width: 768px) {
     body {
     }
@@ -58,6 +66,19 @@ footer {
     .main-content.expanse {
         width: 100%;
     }
+    .vsplitter.collapse{
+    	position: initial !important;
+    }
+    .left_panel.collapse{
+    	position: initial !important;
+    }
+    .right_panel.collapse{
+    	position: initial !important;
+    }
+}
+
+.vsplitter{
+	z-index: 3 !important;
 }
 
 @media screen and (max-width: 767px) {
@@ -90,6 +111,15 @@ footer {
         background-color: #337ab7;
     }
     .main-content {
+    }
+    .vsplitter.collapse{
+    	position: initial !important;
+    }
+    .left_panel.collapse{
+    	position: initial !important;
+    }
+    .right_panel.collapse{
+    	position: initial !important;
     }
 }
 
