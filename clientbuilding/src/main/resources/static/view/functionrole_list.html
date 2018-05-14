@@ -79,6 +79,10 @@
 										<md-tooltip md-direction="bottom">{{'clientbuilding_home_create' | translate}}</md-tooltip>
 										<md-icon md-font-library="material-icons">add</md-icon>
 									</md-button>
+									<md-button class="md-icon-button test-tooltip md-raised" ng-disabled="isServerCalling" ng-if="isListClose" ng-click="closeListDialog()">
+										<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+										<md-icon md-font-library="material-icons">close</md-icon>
+									</md-button>
 								</div>
 							</div>
 							<!-- /paging and action -->
@@ -207,6 +211,10 @@
 									<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="showCreate()">
 										<md-tooltip md-direction="bottom">{{'clientbuilding_home_create' | translate}}</md-tooltip>
 										<md-icon md-font-library="material-icons">add</md-icon>
+									</md-button>
+									<md-button class="md-icon-button test-tooltip md-raised" ng-disabled="isServerCalling" ng-if="isListClose" ng-click="closeListDialog()">
+										<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+										<md-icon md-font-library="material-icons">close</md-icon>
 									</md-button>
 								</div>
 							</div>

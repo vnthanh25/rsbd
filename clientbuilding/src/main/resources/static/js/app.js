@@ -42,8 +42,8 @@ define(['require', 'angular', 'bootstrap',
 		angular.bootstrap(document, [clientbuilding.name]);
 	}
 	
-	app.config(['$httpProvider', '$locationProvider', '$controllerProvider', '$provide', '$compileProvider', '$stateProvider', '$urlRouterProvider', '$translateProvider', '$translatePartialLoaderProvider', '$mdDateLocaleProvider', '$mdToastProvider', 'moment',
-		function($httpProvider, $locationProvider, $controllerProvider, $provide, $compileProvider, $stateProvider, $urlRouterProvider, $translateProvider, $translatePartialLoaderProvider, $mdDateLocaleProvider, $mdToastProvider, moment) {
+	app.config(['$httpProvider', '$locationProvider', '$controllerProvider', '$provide', '$compileProvider', '$stateProvider', '$urlRouterProvider', '$translateProvider', '$translatePartialLoaderProvider', '$mdDateLocaleProvider', '$mdToastProvider', '$mdThemingProvider', 'moment',
+		function($httpProvider, $locationProvider, $controllerProvider, $provide, $compileProvider, $stateProvider, $urlRouterProvider, $translateProvider, $translatePartialLoaderProvider, $mdDateLocaleProvider, $mdToastProvider, $mdThemingProvider, moment) {
 		
 		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 		$httpProvider.defaults.headers.common['Accept'] = 'application/json';
@@ -157,6 +157,9 @@ define(['require', 'angular', 'bootstrap',
 	    		};
 	    	}
 	    });
+	    
+	    // material theme.
+	    $mdThemingProvider.theme('default').primaryPalette('indigo').accentPalette('pink').warnPalette('red').backgroundPalette('blue-grey');
 	    
 	    // Default route.
 	    $urlRouterProvider.otherwise(clientbuilding.contextPath + '/home');

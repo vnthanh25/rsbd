@@ -79,7 +79,12 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 		}
 		
 		$scope.isServerCalling = false;
+		$scope.isListClose = false;
 		$scope.currentDate = new Date();
+
+		if(typeof(this.locals) !== 'undefined'){
+			$scope.isListClose = this.locals.params.isListClose;
+		}
 		
 		$scope.project = {id: -1};
 		// listForSelect.
@@ -240,6 +245,24 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 	        	console.log('not closed');
 	        });
 	    }
+	    
+	    // show project type manager dialog.
+	    $scope.showProjecttypeManagerDialog = function(){
+	    	require([clientbuilding.contextPath + '/js/controller/typeController.js'], function(){
+		    	var htmlUrlTemplate = clientbuilding.contextPath + '/view/type_list.html';
+		    	clientmain.showDialogWithControllerName(clientbuilding.prefix + 'typeController', 'typeController', $mdDialog, htmlUrlTemplate, {id: $scope.project.idprojecttype, scope:'project', isListClose:true}).then(
+		    		function(response){
+		    			$scope.project.idprojecttype = response.id;
+		    		}
+		    	);
+	    	});
+	    }
+			
+		// Close list dialog.
+		$scope.closeListDialog = function(){
+			$mdToast.hide();
+			$mdDialog.hide({id: $scope.project.id});
+		}
 			
 		// Close form dialog.
 		$scope.closeFormDialog = function(){

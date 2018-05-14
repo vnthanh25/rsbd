@@ -27,7 +27,7 @@
 													</md-input-container>
 	
 													<div flex="auto" class="btn-group">
-														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" type="submit">
+														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" type="submit">
 															<md-tooltip>{{'clientbuilding_home_search' | translate}}</md-tooltip>
 															<md-icon md-font-library="material-icons">search</md-icon>
 														</md-button>
@@ -50,7 +50,7 @@
 													</md-input-container>
 	
 													<div flex="auto" class="btn-group">
-														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="sortReverse()">
+														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="sortReverse()">
 															<md-tooltip>{{reverseTitle}}</md-tooltip>
 															<md-icon ng-if="reverse" md-font-library="material-icons">arrow_upward</md-icon>
 															<md-icon ng-if="!reverse" md-font-library="material-icons">arrow_downward</md-icon>
@@ -76,9 +76,13 @@
 											<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
 											<md-icon md-font-library="material-icons">refresh</md-icon>
 										</md-button>
-										<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="showCreate()">
+										<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="showCreate()">
 											<md-tooltip md-direction="bottom">{{'clientbuilding_home_create' | translate}}</md-tooltip>
 											<md-icon md-font-library="material-icons">add</md-icon>
+										</md-button>
+										<md-button class="md-icon-button test-tooltip md-raised" ng-disabled="isServerCalling" ng-if="isListClose" ng-click="closeListDialog()">
+											<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+											<md-icon md-font-library="material-icons">close</md-icon>
 										</md-button>
 									</div>
 								</div>
@@ -143,6 +147,9 @@
 															<md-button class="md-icon-button test-tooltip md-primary md-raised" md-colors="{background: 'default-red'}" ng-click="delete(item.id, item.version)">
 																<md-icon md-font-library="material-icons">delete</md-icon>
 															</md-button>
+															<md-button class="md-icon-button test-tooltip md-primary md-raised" md-colors="{background: 'default-grey'}" ng-if="isListClose" ng-click="selectAndCloseDialog(item.id)">
+																<md-icon md-font-library="material-icons">done</md-icon>
+															</md-button>
 														</md-fab-actions>
 													</md-toolbar>
 													
@@ -171,7 +178,7 @@
 													</md-input-container>
 	
 													<div flex="auto" class="btn-group">
-														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" type="submit">
+														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" type="submit">
 															<md-tooltip>{{'clientbuilding_home_search' | translate}}</md-tooltip>
 															<md-icon md-font-library="material-icons">search</md-icon>
 														</md-button>
@@ -194,7 +201,7 @@
 													</md-input-container>
 	
 													<div flex="auto" class="btn-group">
-														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="sortReverse()">
+														<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="sortReverse()">
 															<md-tooltip>{{reverseTitle}}</md-tooltip>
 															<md-icon ng-if="reverse" md-font-library="material-icons">arrow_upward</md-icon>
 															<md-icon ng-if="!reverse" md-font-library="material-icons">arrow_downward</md-icon>
@@ -220,9 +227,13 @@
 											<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
 											<md-icon md-font-library="material-icons">refresh</md-icon>
 										</md-button>
-										<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'blue'}" ng-click="showCreate()">
+										<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-click="showCreate()">
 											<md-tooltip md-direction="bottom">{{'clientbuilding_home_create' | translate}}</md-tooltip>
 											<md-icon md-font-library="material-icons">add</md-icon>
+										</md-button>
+										<md-button class="md-icon-button test-tooltip md-raised" ng-disabled="isServerCalling" ng-if="isListClose" ng-click="closeListDialog()">
+											<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+											<md-icon md-font-library="material-icons">close</md-icon>
 										</md-button>
 									</div>
 								</div>

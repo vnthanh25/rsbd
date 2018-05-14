@@ -4,8 +4,8 @@
  **/
 
 define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeService.js'], function (require, angular) {
-	app.aController(clientbuilding.prefix + 'typeController', ['$scope', '$state', '$stateParams', '$rootScope', '$q', '$mdDialog', '$log', '$filter', '$translate', '$translatePartialLoader', '$mdToast', clientbuilding.prefix + 'typeService',
-		function($scope, $state, $stateParams, $rootScope, $q, $mdDialog, $log, $filter, $translate, $translatePartialLoader, $mdToast, typeService) {
+	app.aController(clientbuilding.prefix + 'typeController', ['$scope', '$state', '$stateParams', '$rootScope', '$q', '$mdDialog', '$log', '$filter', '$translate', '$translatePartialLoader', '$mdToast', '$mdColors', clientbuilding.prefix + 'typeService',
+		function($scope, $state, $stateParams, $rootScope, $q, $mdDialog, $log, $filter, $translate, $translatePartialLoader, $mdToast, $mdColors, typeService) {
 		if(typeof(clientbuilding.translate.type) === 'undefined' || clientbuilding.translate.type.indexOf($translate.use()) < 0) {
 			if(typeof(clientbuilding.translate.type) === 'undefined') {
 				clientbuilding.translate.type = '';
@@ -54,21 +54,25 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 			totalElements: 0,
 			currentPage: 0
 		}
-		
-		// scope of type.
-		var scope = $stateParams.scope;
-		if(typeof(this.locals) !== 'undefined'){
-			scope = this.locals.scope;
-		}
 
 		$scope.isServerCalling = false;
+		$scope.isListClose = false;
 		$scope.currentDate = new Date();
 		
-		$scope.type = {id: -1, scope: scope};
+		// scope of type.
+		var idParam = $stateParams.id;
+		var scopeParam = $stateParams.scope;
+		if(typeof(this.locals) !== 'undefined'){
+			$scope.isListClose = this.locals.params.isListClose;
+			idParam = this.locals.params.id;
+			scopeParam = this.locals.params.scope;
+		}
+		
+		$scope.type = {id: -1, scope: scopeParam};
 
 	    // Create new.
 		$scope.createNew = function() {
-			$scope.type = { id: -1, scope: scope };
+			$scope.type = { id: -1, scope: scopeParam };
 		}
 		
 		// Create on form.
@@ -79,7 +83,11 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 		
 		// Init for list.
 		$scope.initList = function() {
-			$scope.listWithCriteriasByScopeAndPage($scope.type.scope, $scope.page.currentPage);
+			if(idParam && idParam > -1){
+				$scope.showForm(idParam);
+			} else {
+				$scope.listWithCriteriasByScopeAndPage($scope.type.scope, $scope.page.currentPage);
+			}
 		}
 		
 		// Init for form.
@@ -154,6 +162,18 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 	        	console.log('not closed');
 	        });
 	    }
+			
+		// Close list dialog.
+		$scope.closeListDialog = function(){
+			$mdToast.hide();
+			$mdDialog.hide({id: $scope.type.id});
+		}
+			
+		// Select and close list dialog.
+		$scope.selectAndCloseDialog = function(id){
+			$mdToast.hide();
+			$mdDialog.hide({id: id});
+		}
 			
 		// Close form dialog.
 		$scope.closeFormDialog = function(){

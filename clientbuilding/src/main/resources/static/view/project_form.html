@@ -72,8 +72,8 @@
 								<!-- /name -->
 								<!-- idprojecttype -->
 	                            <div class="form-group col-sm-12">
-                            		<div class="input-group col-sm-12">
-	                                    <md-autocomplete
+                            		<div layout="row" class="input-group col-sm-12">
+	                                    <md-autocomplete flex="grow"
 	                                    	md-input-name="idprojecttype" required md-require-match
 	                                    	md-min-length="0" md-clear-button="true" md-select-on-match="true" md-autoselect="true"
 	                                        md-items="item in ctlidprojecttype.querySearch(ctlidprojecttype.searchText)"
@@ -91,6 +91,12 @@
 	                                            <div ng-message="md-require-match">{{ 'clientbuilding_home_no_item_matching' | translate }}</div>
 	                                        </div>
 	                                    </md-autocomplete>
+	                                    <md-input-container flex="auto">
+		                                    <md-button ng-click="showProjecttypeManagerDialog()" class="md-icon-button test-tooltip">
+		                                    	<md-tooltip>{{'clientbuilding_home_search' | translate}}</md-tooltip>
+		                                    	<md-icon md-font-library="material-icons">search</md-icon>
+		                                    </md-button>
+	                                    </md-input-container>
 	                                </div>
 	                            </div>
 								<!-- /idprojecttype -->

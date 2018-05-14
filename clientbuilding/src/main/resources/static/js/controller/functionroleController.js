@@ -55,7 +55,12 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/function
 		}
 		
 		$scope.isServerCalling = false;
+		$scope.isListClose = false;
 		$scope.currentDate = new Date();
+
+		if(typeof(this.locals) !== 'undefined'){
+			$scope.isListClose = this.locals.params.isListClose;
+		}
 		
 		$scope.functionrole = {id: -1};
 
@@ -153,6 +158,12 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/function
 	        	console.log('not closed');
 	        });
 	    }
+			
+		// Close list dialog.
+		$scope.closeListDialog = function(){
+			$mdToast.hide();
+			$mdDialog.hide({id: $scope.functionrole.id});
+		}
 			
 		// Close form dialog.
 		$scope.closeFormDialog = function(){
