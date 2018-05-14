@@ -2,9 +2,7 @@
 package com.redsun.server.building.authorize;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +15,6 @@ import com.redsun.server.building.controller.TypeRestController;
 import com.redsun.server.building.model.Type;
 import com.redsun.server.building.model.common.SearchCriteria;
 import com.redsun.server.building.repository.TypeRepository;
-import com.redsun.server.building.util.SecurityUtil;
 
 @Component("typeAuthorize")
 public class TypeAuthorize {
@@ -32,8 +29,6 @@ public class TypeAuthorize {
 
 	public boolean canCreate(Type type) throws JsonParseException, JsonMappingException, IOException {
 		boolean result = true;
-		Integer iduser = SecurityUtil.getIdUser();
-		result = permissionAuthorize.isCreate("type", iduser);
 
 		return result;
 	}

@@ -1,0 +1,211 @@
+
+<div>
+	<md-card>
+		<form name="frmType" novalidate class="css-form">
+			<!-- title -->
+            <md-card-title-text>
+                <span class="md-headline">{{'clientbuilding_type_title' | translate}}</span>
+            </md-card-title-text>
+			<!-- /title -->
+			<div class="panel panel-default">
+				<!-- Top actions -->
+				<div class="panel-heading">
+					<div class="row">
+						<div class="btn-group pull-right">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="refreshForm()">
+								<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">refresh</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-disabled="isServerCalling" ng-click="save()">
+								<md-tooltip>{{'clientbuilding_home_save' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">save</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-disabled="isServerCalling" ng-disabled="isServerCalling" ng-click="createOnForm()">
+								<md-tooltip>{{'clientbuilding_home_create' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">add</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="type.id > -1" ng-disabled="isServerCalling" ng-disabled="isServerCalling" ng-click="deleteOnForm()"
+								md-colors="{background: 'default-red'}">
+								<md-tooltip md-direction="top">{{'clientbuilding_home_delete' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">delete</md-icon>
+							</md-button>
+							
+							<md-button class="md-icon-button test-tooltip md-raised" ng-disabled="isServerCalling" ng-click="closeFormDialog()">
+								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">close</md-icon>
+							</md-button>
+						</div>
+					</div>
+				</div>
+				<!-- /Top actions -->
+				<!-- Content -->
+				<md-card-content>
+					<div class="row">
+						
+						<!-- First column -->
+						<div class="col-sm-6">
+							<div class="form-vertical">
+								<!-- idworkflow -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmType.idworkflow.$touched) && (frmType.idworkflow.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_type_idworkflow' | translate}}</label>
+										<input name="idworkflow" ng-model="type.idworkflow" md-input md-no-asterisk>
+										<!-- <div ng-messages="(frmDirty || frmType.idworkflow.$touched) && (frmType.idworkflow.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /idworkflow -->
+								<!-- idcategory -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmType.idcategory.$touched) && (frmType.idcategory.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_type_idcategory' | translate}}</label>
+										<input name="idcategory" ng-model="type.idcategory" md-input md-no-asterisk>
+										<!-- <div ng-messages="(frmDirty || frmType.idcategory.$touched) && (frmType.idcategory.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /idcategory -->
+								<!-- idplanningmode -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmType.idplanningmode.$touched) && (frmType.idplanningmode.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_type_idplanningmode' | translate}}</label>
+										<input name="idplanningmode" ng-model="type.idplanningmode" md-input md-no-asterisk>
+										<!-- <div ng-messages="(frmDirty || frmType.idplanningmode.$touched) && (frmType.idplanningmode.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /idplanningmode -->
+								<!-- scope -->
+								<!-- <div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmType.scope.$touched) && (frmType.scope.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_type_scope' | translate}}</label>
+										<input name="scope" ng-model="type.scope" md-input md-no-asterisk>
+										<div ng-messages="(frmDirty || frmType.scope.$touched) && (frmType.scope.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div>
+									</md-input-container>
+								</div> -->
+								<!-- /scope -->
+								<!-- code -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmType.code.$touched) && (frmType.code.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_type_code' | translate}}</label>
+										<input name="code" ng-model="type.code" md-input md-no-asterisk>
+										<!-- <div ng-messages="(frmDirty || frmType.code.$touched) && (frmType.code.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /code -->
+								<!-- name -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmType.name.$touched) && (frmType.name.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_type_name' | translate}}</label>
+										<input name="name" ng-model="type.name" md-input md-no-asterisk>
+										<!-- <div ng-messages="(frmDirty || frmType.name.$touched) && (frmType.name.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /name -->
+								<!-- description -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmType.description.$touched) && (frmType.description.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_type_description' | translate}}</label>
+										<input name="description" ng-model="type.description" md-input md-no-asterisk>
+										<!-- <div ng-messages="(frmDirty || frmType.description.$touched) && (frmType.description.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /description -->
+								<!-- priority -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmType.priority.$touched) && (frmType.priority.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_type_priority' | translate}}</label>
+										<input name="priority" ng-model="type.priority" md-input md-no-asterisk>
+										<!-- <div ng-messages="(frmDirty || frmType.priority.$touched) && (frmType.priority.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /priority -->
+								<!-- sortorder -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmType.sortorder.$touched) && (frmType.sortorder.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_type_sortorder' | translate}}</label>
+										<input name="sortorder" ng-model="type.sortorder" md-input md-no-asterisk>
+										<!-- <div ng-messages="(frmDirty || frmType.sortorder.$touched) && (frmType.sortorder.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /sortorder -->
+								<!-- color -->
+								<div class="form-group col-sm-12">
+									<md-input-container class="md-block" md-is-error="(frmDirty || frmType.color.$touched) && (frmType.color.$invalid)">
+										<label class="control-label col-sm-6" >{{'clientbuilding_type_color' | translate}}</label>
+										<input name="color" ng-model="type.color" md-input md-no-asterisk>
+										<!-- <div ng-messages="(frmDirty || frmType.color.$touched) && (frmType.color.$error)">
+											<div ng-message="required">{{ 'clientbuilding_home_required_field' | translate }}</div>
+										</div> -->
+									</md-input-container>
+								</div>
+								<!-- /color -->
+							</div>
+						</div>
+						<!-- /First column -->
+						
+						<!-- Second column -->
+						<div class="col-sm-6">
+							<div class="form-vertical">
+							
+							</div>
+						</div>
+						<!-- /Second column -->
+					</div>
+				</md-card-content>
+				<!-- /Content -->
+				<!-- Bottom actions -->
+				<div class="panel-heading">
+					<div class="row">
+						<div class="btn-group pull-right">
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-click="refreshForm()">
+								<md-tooltip>{{'clientbuilding_home_refresh' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">refresh</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-green'}" ng-disabled="isServerCalling" ng-disabled="isServerCalling" ng-click="save()">
+								<md-tooltip>{{'clientbuilding_home_save' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">save</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-raised md-primary" md-colors="{background: 'default-blue'}" ng-disabled="isServerCalling" ng-disabled="isServerCalling" ng-click="createOnForm()">
+								<md-tooltip>{{'clientbuilding_home_create' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">add</md-icon>
+							</md-button>
+
+							<md-button class="md-icon-button test-tooltip md-primary md-raised" ng-show="type.id > -1" ng-disabled="isServerCalling" ng-disabled="isServerCalling" ng-click="deleteOnForm()"
+								md-colors="{background: 'default-red'}">
+								<md-tooltip md-direction="top">{{'clientbuilding_home_delete' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">delete</md-icon>
+							</md-button>
+							
+							<md-button class="md-icon-button test-tooltip md-raised" ng-disabled="isServerCalling" ng-click="closeFormDialog()">
+								<md-tooltip>{{'clientbuilding_home_close' | translate}}</md-tooltip>
+								<md-icon md-font-library="material-icons">close</md-icon>
+							</md-button>
+						</div>
+					</div>
+				</div>
+				<!-- /Bottom actions -->
+			</div>
+		</form>
+	</md-card>
+</div>

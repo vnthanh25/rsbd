@@ -501,7 +501,7 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/projectS
 			// idcalendar.
 			let idcalendar = calendarService.listForSelect();
 			// idprojecttype.
-			let idprojecttype = typeService.listForSelect();
+			let idprojecttype = typeService.listForSelectByScope('project');
 			// idclient.
 			var idclient = clientService.listForSelect();
 			// idcontact.

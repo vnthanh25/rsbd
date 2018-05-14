@@ -4,8 +4,8 @@
  **/
 
 define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeService.js'], function (require, angular) {
-	app.aController(clientbuilding.prefix + 'typeController', ['$scope', '$state', '$rootScope', '$mdDialog', '$http', '$log', '$window', '$location', '$filter', '$translate', '$translatePartialLoader', '$mdToast', clientbuilding.prefix + 'typeService',
-		function($scope, $state, $rootScope, $mdDialog, $http, $log, $window, $location, $filter, $translate, $translatePartialLoader, $mdToast, typeService) {
+	app.aController(clientbuilding.prefix + 'typeController', ['$scope', '$state', '$stateParams', '$rootScope', '$q', '$mdDialog', '$log', '$filter', '$translate', '$translatePartialLoader', '$mdToast', clientbuilding.prefix + 'typeService',
+		function($scope, $state, $stateParams, $rootScope, $q, $mdDialog, $log, $filter, $translate, $translatePartialLoader, $mdToast, typeService) {
 		if(typeof(clientbuilding.translate.type) === 'undefined' || clientbuilding.translate.type.indexOf($translate.use()) < 0) {
 			if(typeof(clientbuilding.translate.type) === 'undefined') {
 				clientbuilding.translate.type = '';
@@ -17,30 +17,18 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 		
 		var unRegister = $rootScope.$on('$translateChangeSuccess', function () {
 		    $scope.title = $translate.instant('clientbuilding_type_title');
+			if(!$rootScope.menuActiveTitle){
+		    	$rootScope.menuActiveTitle = $translate.instant('clientbuilding_type_' + $scope.type.scope + '_title');
+		    }
 			// Init sortData.
 		    let title = $scope.reverse?'asc':'desc';
 		    $scope.reverseTitle = $translate.instant('clientbuilding_home_sort_' + title);
 		    if($scope.sortData.length < 1){
-				// idworkflow.
-		    	$scope.sortData.push({value: 'idworkflow', display: $translate.instant('clientbuilding_type_idworkflow')});
-				// idcategory.
-		    	$scope.sortData.push({value: 'idcategory', display: $translate.instant('clientbuilding_type_idcategory')});
-				// idplanningmode.
-		    	$scope.sortData.push({value: 'idplanningmode', display: $translate.instant('clientbuilding_type_idplanningmode')});
-				// scope.
-		    	$scope.sortData.push({value: 'scope', display: $translate.instant('clientbuilding_type_scope')});
+				// updatedate.
+				$scope.sortData.push({value: 'updatedate', display: $translate.instant('clientbuilding_home_recent')});
 				// code.
 		    	$scope.sortData.push({value: 'code', display: $translate.instant('clientbuilding_type_code')});
 				// name.
-		    	$scope.sortData.push({value: 'name', display: $translate.instant('clientbuilding_type_name')});
-				// description.
-		    	$scope.sortData.push({value: 'description', display: $translate.instant('clientbuilding_type_description')});
-				// priority.
-		    	$scope.sortData.push({value: 'priority', display: $translate.instant('clientbuilding_type_priority')});
-				// sortorder.
-		    	$scope.sortData.push({value: 'sortorder', display: $translate.instant('clientbuilding_type_sortorder')});
-				// color.
-		    	$scope.sortData.push({value: 'color', display: $translate.instant('clientbuilding_type_color')});
 		    }
 		});
 		// Unregister
@@ -48,14 +36,15 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 		    unRegister();
 		});		
 	    $translate.onReady().then(function() {
-	    	$scope.title = $translate.instant('clientbuilding_type_title');
 	    	$translate.refresh();
+	    });
+	    $scope.$on('$viewContentLoaded', function(event) {
 	    });
 		
 	    // Search.
 	    $scope.search = {};
 	    // Sort.
-	    $scope.reverse = true;
+	    $scope.reverse = false;
 	    $scope.reverseTitle = '';
 	    $scope.sortData = [];
 	    
@@ -66,16 +55,31 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 			currentPage: 0
 		}
 		
-		$scope.type = {id: -1};
+		// scope of type.
+		var scope = $stateParams.scope;
+		if(typeof(this.locals) !== 'undefined'){
+			scope = this.locals.scope;
+		}
+
+		$scope.isServerCalling = false;
+		$scope.currentDate = new Date();
+		
+		$scope.type = {id: -1, scope: scope};
 
 	    // Create new.
 		$scope.createNew = function() {
-			$scope.type = { id: -1 };
+			$scope.type = { id: -1, scope: scope };
+		}
+		
+		// Create on form.
+		$scope.createOnForm = function() {
+			$scope.createNew();
+			$scope.resetValidate();
 		}
 		
 		// Init for list.
 		$scope.initList = function() {
-			$scope.listWithCriteriasByPage($scope.page.currentPage);
+			$scope.listWithCriteriasByScopeAndPage($scope.type.scope, $scope.page.currentPage);
 		}
 		
 		// Init for form.
@@ -94,6 +98,21 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 			$scope.type.id = id;
 			if($scope.type.id > -1) {
 				$scope.getById($scope.type.id);
+			}
+			$scope.frmDirty = false;
+		}
+		
+		// refresh list.
+		$scope.refreshList = function() {
+			$scope.listWithCriteriasByScopeAndPage($scope.type.scope, $scope.page.currentPage);
+		}
+		
+		// refresh form
+		$scope.refreshForm = function() {
+			$scope.createNew();
+			$scope.resetValidate();
+			if($scope.project.id > -1) {
+				$scope.getById($scope.project.id);
 			}
 			$scope.frmDirty = false;
 		}
@@ -136,8 +155,16 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 	        });
 	    }
 			
-		// Close dialog.
-		$scope.closeDialog = function(){
+		// Close form dialog.
+		$scope.closeFormDialog = function(){
+			// reload list.
+			$scope.listWithCriteriasByScopeAndPage($scope.type.scope, $scope.page.currentPage);
+			$mdToast.hide();
+			$mdDialog.hide({id: $scope.type.id});
+		}
+			
+		// Close view dialog.
+		$scope.closeViewDialog = function(){
 			$mdToast.hide();
 			$mdDialog.hide({id: $scope.type.id});
 		}
@@ -182,96 +209,118 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 			$scope.frmDirty = false;
 		}
 		
-		// Create on form.
-		$scope.createOnForm = function() {
-			$scope.createNew();
-			$scope.resetValidate();
-		}
-		
 		// Save.
 		$scope.save = function() {
 			if($scope.frmType.$invalid) {
 				$scope.frmType.$dirty = true;
 				$scope.frmDirty = true;
+				$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
 				return;
 			}
-			$scope.showMessageOnToast($translate.instant('clientbuilding_home_saving'));
+			$scope.isServerCalling = true;
+			// show message.
+			$scope.showMessageOnToast($translate.instant('clientbuilding_home_saving'), {delay:0});
 			var result;
 			if($scope.type.id > -1) {
 				result = typeService.updateWithLock($scope.type.id, $scope.type);
 			} else {
 				result = typeService.create($scope.type);
 			}
-			result
-			// success.
-			.then(function(response) {
-				if(response.status === httpStatus.code.OK) {
-					if($scope.type.id > -1) {
-						$scope.type.version = response.data;
+			result.then(
+				// success.
+				function(response) {
+					$scope.isServerCalling = false;
+					$mdToast.hide();
+					if(response.status === httpStatus.code.OK) {
+						if($scope.type.id > -1) {
+							$scope.type.version = response.data;
+						} else {
+							$scope.type.id = response.data;
+							$scope.type.version = 1;
+						}
+						// show message.
+						$scope.showMessageOnToast($translate.instant('clientbuilding_home_saved'));
 					} else {
-						$scope.type.id = response.data;
-						$scope.type.version = 1;
+						if(response.data.code == clientbuilding.serverCode.VERSIONDIFFERENCE) {
+							$scope.showMessageOnToast($translate.instant('clientbuilding_servercode_' + response.data.code));
+						} else if(response.data.code == clientbuilding.serverCode.EXISTSCOPE) {
+							$scope.frmType.scope.$invalid = true;
+							$scope.showMessageOnToast($translate.instant('clientbuilding_servercode_' + response.data.code));
+						} else {
+							$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
+						}
 					}
-					$scope.showMessageOnToast($translate.instant('clientbuilding_home_saved'));
-					$scope.listWithCriteriasByPage($scope.page.currentPage);
-				} else {
-					if(response.data.code == clientbuilding.serverCode.VERSIONDIFFERENCE) {
-						$scope.showMessageOnToast($translate.instant('clientbuilding_servercode_' + response.data.code));
-					} else if(response.data.code == clientbuilding.serverCode.EXISTSCOPE) {
-						$scope.frmType.scope.$invalid = true;
-						$scope.showMessageOnToast($translate.instant('clientbuilding_servercode_' + response.data.code));
-					} else {
-						$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
-					}
+				},
+				// error.
+				function(response) {
+					$scope.isServerCalling = false;
+					$mdToast.hide();
+					$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
 				}
-			},
-			// error.
-			function(response) {
-				$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
-			});
+			);
 		}
 		
 		// Delete.
 		$scope.delete = function(id, version) {
-			typeService.updateForDeleteWithLock(id, version)
-			// success.
-			.then(function(response) {
-				if(response.status === httpStatus.code.OK) {
-					$scope.showMessageOnToastList($translate.instant('clientbuilding_home_deleted'));
-					if($scope.types.length == 1 && $scope.page.currentPage > 0){
-						$scope.page.currentPage--;
-					}
-					$scope.listWithCriteriasByPage($scope.page.currentPage);
-				} else {
-					$scope.showMessageOnToastList($translate.instant('clientbuilding_home_deleted'));
+			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialogConfirm.html';
+			let title = $translate.instant('clientmain_home_delete_message_confirm');
+			clientmain.showDialogConfirm($mdDialog, htmlUrlTemplate, title).then(function(response) {
+				// ok delete.
+				if(response){
+					$scope.isServerCalling = true;
+					typeService.updateForDeleteWithLock(id, version)
+					// success.
+					.then(function(response) {
+						$scope.isServerCalling = false;
+						if(response.status === httpStatus.code.OK) {
+							$scope.showMessageOnToast($translate.instant('clientbuilding_home_deleted'));
+							if($scope.types.length == 1 && $scope.page.currentPage > 0){
+								$scope.page.currentPage--;
+							}
+							$scope.listWithCriteriasByScopeAndPage($scope.type.scope, $scope.page.currentPage);
+						} else {
+							$scope.showMessageOnToast($translate.instant('clientbuilding_home_deleted'));
+						}
+					},
+					// error.
+					function(response) {
+						$scope.isServerCalling = false;
+						$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
+					});
 				}
-			},
-			// error.
-			function(response) {
-				$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
 			});
 		}
 		
 		// Delete with create.
 		$scope.deleteOnForm = function() {
-			typeService.updateForDeleteWithLock($scope.type.id, $scope.type.version)
-			// success.
-			.then(function(response) {
-				if(response.status === httpStatus.code.OK) {
-					$scope.showMessageOnToast($translate.instant('clientbuilding_home_deleted'));
-					$scope.createNew();
-					$scope.resetValidate();
-					if($scope.types.length == 1 && $scope.page.currentPage > 0){
-						$scope.page.currentPage--;
-					}
-					$scope.listWithCriteriasByPage($scope.page.currentPage);
-				} else {
-					$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
+			let htmlUrlTemplate = clientbuilding.contextPath + '/view/dialogConfirm.html';
+			let title = $translate.instant('clientmain_home_delete_message_confirm');
+			clientmain.showDialogConfirm($mdDialog, htmlUrlTemplate, title).then(function(response) {
+				// ok delete.
+				if(response){
+					$scope.isServerCalling = true;
+					typeService.updateForDeleteWithLock($scope.type.id, $scope.type.version)
+					// success.
+					.then(function(response) {
+						$scope.isServerCalling = false;
+						if(response.status === httpStatus.code.OK) {
+							$scope.showMessageOnToast($translate.instant('clientbuilding_home_deleted'));
+							$scope.createNew();
+							$scope.resetValidate();
+							if($scope.types.length == 1 && $scope.page.currentPage > 0){
+								$scope.page.currentPage--;
+							}
+							$scope.listWithCriteriasByScopeAndPage($scope.type.scope, $scope.page.currentPage);
+						} else {
+							$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
+						}
+					},
+					// error.
+					function(response) {
+						$scope.isServerCalling = false;
+						$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
+					});
 				}
-			},
-			// error.
-			function(response) {
-				$scope.showMessageOnToast($translate.instant('clientbuilding_home_error'));
 			});
 		}
 		
@@ -294,9 +343,10 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 		}
 		
 		// List for page and filter.
-		$scope.listWithCriteriasByPage = function(pageNo) {
+		$scope.listWithCriteriasByScopeAndPage = function(scope, pageNo) {
+			$scope.type.scope = scope;
 			$scope.page.currentPage = pageNo;
-			typeService.listWithCriteriasByPage($scope.getSearch(), pageNo - 1, $scope.page.pageSize, $scope.getSort()).then(
+			typeService.listWithCriteriasByScopeAndPage($scope.type.scope, $scope.getSearch(), pageNo - 1, $scope.page.pageSize, $scope.getSort()).then(
 			// success.
 			function(response) {
 				if(response.status === httpStatus.code.OK) {
@@ -330,7 +380,7 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 		$scope.sortBy = function(keyName){
 			$scope.sortKey = keyName;
 			// Reload data.
-			$scope.listWithCriteriasByPage($scope.page.currentPage);
+			$scope.listWithCriteriasByScopeAndPage($scope.type.scope, $scope.page.currentPage);
 		}
 		
 		// sortReverse.
@@ -339,19 +389,21 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 			let title = $scope.reverse?'asc':'desc';
 		    $scope.reverseTitle = $translate.instant('clientbuilding_home_sort_' + title);
 			// Reload data.
-			$scope.listWithCriteriasByPage($scope.page.currentPage);
+			$scope.listWithCriteriasByScopeAndPage($scope.type.scope, $scope.page.currentPage);
 		}
 		
 		// Get sort object.
 		$scope.getSort = function() {
 			var result = [];
+			var order = 'desc';
+			if ($scope.reverse) {
+				order = 'asc';
+			}
 			// name.
 		    if(typeof($scope.sortKey) !== 'undefined' && $scope.sortKey !== ''){
-				var order = 'desc';
-				if ($scope.reverse) {
-					order = 'asc';
-				}
 				result.push('sort=' + $scope.sortKey + ',' + order);
+		    } else {
+		    	result.push('sort=createdate' + ',' + order);
 		    }
 			// return.
 			return result;
@@ -385,58 +437,26 @@ define(['require', 'angular', clientbuilding.contextPath + '/js/service/typeServ
 		    // return.
 		    return result;
 		}
-			
-		//Show Message Toast List
-		$scope.showMessageOnToastList = function(message){
-			$mdToast.show({ 
-				template: '<md-toast class="md-toast">' + message + '</md-toast>',
-				hideDelay: 3000,
-				position: 'right'})
-		}
 		
-		//Show Message Toast
-		$scope.showMessageOnToast = function(message){
-			$mdToast.show({ 
-				template: '<md-toast class="md-toast">' + message + '</md-toast>',
-				hideDelay: 3000,
-				position: 'top right'})
-		}
-		
-		//Delete Toast List
-		$scope.cofirmDeleteToastList = function(id, version){
-			$mdToast.show({  	
-				templateUrl: clientbuilding.contextPath + '/view/toast.html',
-				hideDelay:5000,
-				controller: 'clientbuildingtypeController',
-				position: 'right'
-			}).then(function(response){
-				if (response) {
-					$scope.delete(id,version);
+		//Show message.
+		$scope.showMessageOnToast = function(message, params){
+			var toast = $mdToast.toastMessage().textContent(message);
+			if(typeof(params) !== 'undefined'){
+				if(typeof(params.templateUrl) !== 'undefined'){
+					toast.templateUrl(params.templateUrl);
 				}
-			});
-		}
-		
-		//Delete Toast From
-		$scope.cofirmDeleteToastForm = function(){
-			$mdToast.show({
-				templateUrl: clientbuilding.contextPath + '/view/toast.html',
-				hideDelay: 5000,
-				controller: 'clientbuildingtypeController',
-				position: 'top right'
-			}).then(function(response){
-				if (response) {
-					$scope.deleteOnForm();
+				if(typeof(params.action) !== 'undefined'){
+					toast.action(params.action);
 				}
-			});
+				if(typeof(params.position) !== 'undefined'){
+					toast.position(params.position);
+				}
+				if(typeof(params.delay) !== 'undefined'){
+					toast.hideDelay(params.delay);
+				}
+			}
+			return $mdToast.show(toast);
 		}
-		
-		$scope.OkToast = function() {
-			$mdToast.hide(true);
-		};
-		
-		$scope.closeToast = function() {
-			$mdToast.hide(false);
-		};
 	
 	}]);
 

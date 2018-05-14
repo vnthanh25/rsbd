@@ -58,10 +58,10 @@
 				<img src="/clientbuilding/image/arrow.png" width="24" height="24" align="right">
 			</a>
 			<ul class="sidebar-submenu">
-				<li ng-hide="menu.projecttype.hide" ng-init="menu.projecttype.hide=false" ng-click="goto('type', 'project');">
+				<li ng-hide="menu.projecttype.hide" ng-init="menu.projecttype.hide=false" ng-click="goto('type', {scope:'project'});">
 					<a> <span>{{menu.projecttype.label}}</span> </a>
 				</li>
-				<li ng-hide="menu.activitytype.hide" ng-init="menu.activitytype.hide=false" ng-click="goto('type', 'activity');">
+				<li ng-hide="menu.activitytype.hide" ng-init="menu.activitytype.hide=false" ng-click="goto('type', {scope:'activity'});">
 					<a><span>{{menu.activitytype.label}}</span></a>
 				</li>
 			</ul>
